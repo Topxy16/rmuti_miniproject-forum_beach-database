@@ -1,0 +1,12 @@
+.custom-navbar {
+    background-color: #2A5360; /* สีเขียว */
+  }
+
+  .custom-navbar .navbar-brand, .custom-navbar .nav-link {
+    color: #ffffff; /* สีข้อความ */
+  }
+
+  .custom-navbar .nav-link:hover {
+    color: #d4c1b3; /* สีข้อความเมื่อ hover */
+  }
+
