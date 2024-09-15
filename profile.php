@@ -71,7 +71,7 @@ $result1 = mysqli_query($conn, query: $sql1);
                                 </div>
                             </div>
                             <div class="col d-flex align-items-end flex-column">
-                            <a href="#" class="btn btn-primary w-10 mt-auto mb-2 mr-2" style="margin-right: 10px;" role="button" data-bs-toggle="button">แก้ไขข้อมูลส่วนตัว</a>
+                            <a href="updateprofile" class="btn btn-primary w-10 mt-auto mb-2 mr-2" style="margin-right: 10px;" role="button" data-bs-toggle="button">แก้ไขข้อมูลส่วนตัว</a>
                             </div>
                         </div>
                     </div>
