@@ -1,22 +1,28 @@
 <?php
-		include('navbar.php');
-        include('db.connect.php');
-        
-        if(isset($_POST['email'])){
-			$email = $_POST['email'];
-			$pass = $_POST['pass'];
-			
-			$sql = 'SELECT * FROM user WHERE email = "'.$email.'"';
-			$res = mysqli_query($conn, $sql);
-			$data = mysqli_fetch_assoc($res);
-			
-			if($email==$data['email']&&$pass==$data['pass']){
-			$_SESSION['user_id']=$data['user_id'];
-            print_r($_SESSION);
-			header('location:index.php');
-				
-			}else{
-                echo "<script>
+include('navbar.php');
+include('db.connect.php');
+
+if (isset($_POST['email'])) {
+    $email = $_POST['email'];
+    $pass = $_POST['pass'];
+
+    // ใช้ prepared statement สำหรับการตรวจสอบอีเมล
+    $sql = 'SELECT * FROM user WHERE email = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email); // "s" สำหรับ string
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
+
+    if ($data && $email == $data['email'] && md5($pass) == $data['pass']) {
+        // เก็บข้อมูล session ของผู้ใช้
+        session_start();
+        $_SESSION['user_id'] = $data['user_id'];
+        $_SESSION['role'] = $data['role'];
+        print_r($_SESSION);
+        header('location:index.php');
+    } else {
+        echo "<script>
             Swal.fire({
             position: 'center',
             icon: 'error',
@@ -24,12 +30,12 @@
             showConfirmButton: false,
             timer: 2000 })
             </script>";
-            header("Refresh:2; url=login.php");
-            }
-			
-		}
-
+        // รอ 2 วินาทีแล้วกลับไปที่หน้า login
+        header("Refresh:2; url=login.php");
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

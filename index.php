@@ -5,6 +5,7 @@ include("navbar.php");
 
 $sql = 'SELECT * FROM forum_detail';
 $result = mysqli_query($conn, query: $sql);
+
 ?>
 
 <!doctype html>
@@ -56,7 +57,8 @@ $result = mysqli_query($conn, query: $sql);
             <div class="row mt-2 justify-content-center align-items-center g-2">
                 <div class="col"></div>
                 <div class="col-10">
-                    <div class="card border-dark mb-3">
+                    <a href="forum.php?f_id=<?php echo $data["f_id"]?>" style="text-decoration: none;">
+                        <div class="card border-dark mb-3">
                         <div class="row g-0">
                             <div class="col-1 d-flex">
                                 <img src="img/qa.png" alt="Avatar" class="avatar">
@@ -80,6 +82,7 @@ $result = mysqli_query($conn, query: $sql);
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col"></div>
             </div>

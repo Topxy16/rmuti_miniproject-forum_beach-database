@@ -4,12 +4,16 @@ include("db.connect.php");
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
-    md5($pass = $_POST['pass']);
+    $pass = $_POST['pass'];
     $usern = $_POST['user_n'];
 
-    $sql = 'SELECT * FROM user WHERE email = "' . $email . '"';
-    $res = mysqli_query($conn, $sql);
-    $data = mysqli_fetch_assoc($res);
+    // ตรวจสอบว่ามีอีเมลนี้อยู่แล้วหรือไม่โดยใช้ prepared statement
+    $sql = 'SELECT * FROM user WHERE email = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email); // "s" สำหรับ string
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
 
     if ($email == @$data['email']) {
         echo "<script>
@@ -21,20 +25,26 @@ if (isset($_POST['email'])) {
             timer: 2000 })
             </script>";
     } else {
-        $sql = 'INSERT INTO user (email, pass, role) VALUES ("' . $email . '","' . $pass . '",'1')';
-        $res = mysqli_query($conn, $sql);
-        $user_id = mysqli_insert_id($conn);
-        $sql1 = 'INSERT INTO profile (user_n,image,user_id) VALUES ("' . $usern . '","",'.$user_id.')';
-        $res1 = mysqli_query($conn, $sql1);
+        // ใช้ prepared statement สำหรับการเพิ่มข้อมูลเข้าไปในตาราง user
+        $sql = 'INSERT INTO user (email, pass, role) VALUES (?, ?, "1")';
+        $stmt = $conn->prepare($sql);
+        $hashed_pass = md5($pass);
+        $stmt->bind_param("ss", $email, $hashed_pass); // "ss" สำหรับสอง string
+        $stmt->execute();
+        $user_id = $conn->insert_id; // เก็บค่า user_id หลังจาก insert
 
-       
+        // ใช้ prepared statement สำหรับการเพิ่มข้อมูลเข้าไปในตาราง profile
+        $sql1 = 'INSERT INTO profile (user_n, image, user_id) VALUES (?, "", ?)';
+        $stmt1 = $conn->prepare($sql1);
+        $stmt1->bind_param("si", $usern, $user_id); // "si" สำหรับ string และ integer
+        $stmt1->execute();
+
+        // เปลี่ยนเส้นทางไปที่หน้า login
         header('location:login.php');
-
-
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
