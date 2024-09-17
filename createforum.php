@@ -50,13 +50,22 @@ if (isset($_POST['fd_header'])) {
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
+<style>
+
+.btn-color{
+    background-color: #2A5360;
+    color: #ffff;
+}
+
+</style>
+
 <body>
 
     <div class="contrainer mt-5">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
-            <div class="col">
-                <div class="card border-dark">
+            <div class="col-11">
+               
                     <div class="card-body">
                         <div class="card-title">
                             <h2>เขียนกระทู้</h2>
@@ -68,7 +77,7 @@ if (isset($_POST['fd_header'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">รายละเอียด</label>
-                                <textarea class="form-control" id="fd_content" name="fd_content" rows="3" required></textarea>
+                                <textarea class="form-control" id="fd_content" name="fd_content" rows="17" required></textarea>
                             </div>
                             <label for="" class="form-label">ประเภทกระทู้ของคุณ</label>
 
@@ -87,10 +96,10 @@ if (isset($_POST['fd_header'])) {
                                 <label for="formFile" class="form-label">รูป</label>
                                 <input class="form-control" type="file" id="formFile">
                             </div> -->
-                            <button type="submit" class="btn btn-success" style="width: 100%;">ยืนยัน</button>
+                            <button type="submit" class="btn btn-color" style="width: 100%;">ยืนยัน</button>
                         </form>
                     </div>
-                </div>
+              
             </div>
             <div class="col">
 
