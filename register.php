@@ -4,7 +4,8 @@ include("db.connect.php");
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
-    $pass = $_POST['pass'];
+    md5($pass = $_POST['pass']);
+    $usern = $_POST['user_n'];
 
     $sql = 'SELECT * FROM user WHERE email = "' . $email . '"';
     $res = mysqli_query($conn, $sql);
@@ -20,9 +21,16 @@ if (isset($_POST['email'])) {
             timer: 2000 })
             </script>";
     } else {
-        $sql = 'INSERT INTO user (email, pass) VALUES ("' . $email . '","' . $pass . '")';
+        $sql = 'INSERT INTO user (email, pass, role) VALUES ("' . $email . '","' . $pass . '",'1')';
         $res = mysqli_query($conn, $sql);
+        $user_id = mysqli_insert_id($conn);
+        $sql1 = 'INSERT INTO profile (user_n,image,user_id) VALUES ("' . $usern . '","",'.$user_id.')';
+        $res1 = mysqli_query($conn, $sql1);
+
+       
         header('location:login.php');
+
+
     }
 }
 
@@ -52,6 +60,10 @@ if (isset($_POST['email'])) {
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">อีเมล</label>
                                 <input type="email" class="form-control " id="email" name="email" aria-describedby="emailHelp" placeholder="กรอก อีเมล" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">ชื่อผู้ใช้</label>
+                                <input type="text" class="form-control " id="user_n" name="user_n" aria-describedby="" placeholder="กรอก ชื่อผู้ใช้" required>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">รหัสผ่าน</label>
