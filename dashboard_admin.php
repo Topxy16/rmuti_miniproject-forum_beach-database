@@ -3,20 +3,15 @@
 include("db.connect.php");
 include("navbar.php");
 
-$sql2 = 'SELECT * FROM user';
-$result2 = mysqli_query($conn, $sql2);
-
 
 if ($_SESSION['role'] == 2) {
     $sql = 'SELECT `forum`.*, `forum_detail`.*,category.* 
     FROM `forum`, `forum_detail`,category 
     WHERE forum.f_id = forum_detail.f_id
-    AND forum.category_id = category.category_id
-    AND forum.user_id = "' . $_SESSION['user_id'] . '"';
-
+    AND forum.category_id = category.category_id';
     $result = mysqli_query($conn, query: $sql);
 
-    $sql1 = 'SELECT `user`.*, `profile`.* FROM `user`, `profile` WHERE user.user_id = profile.user_id AND user.user_id = "' . $_SESSION['user_id'] . '"';
+    $sql1 = 'SELECT `user`.*, `profile`.* FROM `user`, `profile`WHERE user.user_id = profile.user_id;';
     $result1 = mysqli_query($conn, query: $sql1);
 } else {
     echo "<script>
@@ -72,6 +67,10 @@ if ($_SESSION['role'] == 2) {
             color: #ffff;
 
         }
+
+        .text-custom {
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -82,61 +81,51 @@ if ($_SESSION['role'] == 2) {
     <div class="container mt-5">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col">
-                <div class="card border-dark">
-                    <div class="card-body">
-                        <h4 class="card-title">ผู้ใช้งาน</h4>
-                        <div
-                            class="row justify-content-center align-items-center g-2"
-                        >
-                        <?php for($i = 0; $i < 13; $i++){ ?>
-                  <div class="col justify-content-center align-items-center text-center">
-                  <img src="img/qa.png" alt="Avatar" class="avatar" style="margin:auto;">
-                  ชื่อผู้ใช้งาน
-                  </div>
-                           
-                            
-                      <?php } ?>
-                      </div>
+                <a href="user_admin.php" style="text-decoration: none; color:#000;">
+                    <div class="card border-dark">
+                        <div class="card-body">
+                            <h4 class="card-title">ผู้ใช้งาน</h4>
+                            <div class="row justify-content-center align-items-center g-2">
+                                <?php while ($data = mysqli_fetch_assoc($result1)) { ?>
+                                    <div class="col-1 justify-content-center align-items-center text-center">
+                                        <img src="img/qa.png" alt="Avatar" class="avatar" style="margin:auto;">
+                                        <p><?php echo $data['user_n'] ?></p>
+                                    </div>
+                                <?php } ?>
+                                <small class="text-custom">เพิ่มเติม</small>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="row justify-content-center align-items-center g-2 mt-3">
             <div class="col">
-                <div class="card border-dark">
-                    <div class="card-body">
-                        <h4 class="card-title">ตารางจัดการฟอรัม</h4>
-                        <table class="table border-dark table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <a href="forum_admin.php" style="text-decoration: none; color:#000;">
+                    <div class="card border-dark">
+                        <div class="card-body">
+                            <h4 class="card-title">ตารางจัดการฟอรัม</h4>
+                            <table class="table border-dark table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ไอดีผู้โพสต์</th>
+                                        <th scope="col">หัวข้อฟอรัม</th>
+                                        <th scope="col">ประเภทฟอรัม</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($data = mysqli_fetch_assoc($result)) { ?>
+                                        <tr>
+                                            <td><?php echo $data['user_id'] ?></td>
+                                            <td><?php echo $data['fd_header'] ?></td>
+                                            <td><?php echo $data['category_n'] ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
                 <div class="row justify-content-center align-items-center g-2">
@@ -145,7 +134,9 @@ if ($_SESSION['role'] == 2) {
                             <div class="card-body">
                                 <h4 class="card-title">คอมเม้น</h4>
                                 <i class="bi bi-chat-dots display-3"></i>
-                               <p><h5>200</h5></p>
+                                <p>
+                                <h5>200</h5>
+                                </p>
                             </div>
                         </div>
                     </div>

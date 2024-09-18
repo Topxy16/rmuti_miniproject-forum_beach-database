@@ -38,7 +38,11 @@ if (!empty($_POST)) {
 
             if ($result2) {
                 if ($result3) {
-                    header("location:profile.php");
+                    if($_SESSION['role']=='2'){
+                        header('location:forum_admin.php');
+                    }else{
+                        header('location:profile.php');
+                    }
                 } else {
                     echo "<script>
             Swal.fire({
