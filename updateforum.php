@@ -9,9 +9,7 @@ INNER JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`
 INNER JOIN `profile` ON `forum`.`user_id` = `profile`.`user_id` WHERE forum.f_id=' . $_GET['f_id'];
 $result = mysqli_query($conn, query: $sql);
 
-$sql1 = 'SELECT `forum`.*, `category`.*
-FROM `forum` 
-LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id`';
+$sql1 = 'SELECT * FROM category';
 $result1 = mysqli_query($conn, query: $sql1);
 
 if (!empty($_POST)) {
@@ -145,9 +143,8 @@ if (!empty($_POST)) {
                             <label for="" class="form-label">รายละเอียด</label>
                             <textarea class="form-control" id="fd_content" name="fd_content" rows="17" required><?php echo $data['fd_content'] ?></textarea>
                         </div>
-                        <label for="" class="form-label">ประเภทกระทู้ของคุณ</label>
-                        <select class="form-select mb-3" aria-label="Default select example" name="category_id">
-                            <option selected>เลือกประเภทกระทู้ของคุณ</option>
+                        <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>
+                        <select class="form-select mb-3" aria-label="Default select example" name="category_id">                    
                             <?php
                             while ($data = mysqli_fetch_assoc($result1)) {
                             ?>
