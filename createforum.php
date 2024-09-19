@@ -108,7 +108,7 @@ $result3 = mysqli_query($conn, $sql3);
                     <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>
 
                     <select class="form-select mb-3" aria-label="Default select example" name="category_id" required>
-                        
+
                         <?php
                         while ($data = mysqli_fetch_assoc($result3)) {
                         ?>

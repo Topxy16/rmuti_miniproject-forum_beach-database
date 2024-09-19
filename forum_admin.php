@@ -11,7 +11,6 @@ if ($_SESSION['role'] == 2) {
     WHERE forum.f_id = forum_detail.f_id
     AND forum.category_id = category.category_id';
     $result = mysqli_query($conn, query: $sql);
-
 } else {
     echo "<script>
             Swal.fire({
@@ -35,13 +34,7 @@ if ($_SESSION['role'] == 2) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>ระบบจัดการฟอรัม</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/offcanvas-navbar/">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
+    
     <link href="css/styles.css" rel=" stylesheet">
 
     <style>
@@ -92,7 +85,7 @@ if ($_SESSION['role'] == 2) {
                             <div class="col">
                                 <small style="margin-left: 5px;">เคยสร้างฟอรัมแล้ว</small>
                                
-                                <h4 style="margin-left: 5px;"><?php echo $usercreateforum?></h4>
+                                <h4 style="margin-left: 5px;"><?php echo $usercreateforum ?></h4>
                             </div>
                             <div class="col">
                                 <p class="bi bi-file-text display-4 text-custom"></p>
@@ -107,7 +100,7 @@ if ($_SESSION['role'] == 2) {
                         <div class="row justify-content-center align-items-center g-2">
                             <div class="col">
                                 <small style="margin-left: 5px;">ยังเคยสร้างฟอรัม</small>
-                                <h4 style="margin-left: 5px;"><?php echo $useruncreateforum?></h4>
+                                <h4 style="margin-left: 5px;"><?php echo $useruncreateforum ?></h4>
                             </div>
                             <div class="col">
                                 <p class="bi bi-file-x display-4 text-custom"></p>
@@ -137,18 +130,18 @@ if ($_SESSION['role'] == 2) {
                                 <tbody>
                                     <?php while ($data = mysqli_fetch_assoc($result)) { ?>
                                         <tr>
-                                            <td width="100px"><?php echo $data['user_id'] ?></td>
+                                            <td><?php echo $data['user_id'] ?></td>
                                             <td><?php echo $data['f_id'] ?></td>
-                                            <td><?php echo $data['fd_header']?></td>
-                                            <td><?php echo $data['fd_content'] ?></td>
-                                            <td><?php echo $data['category_n'] ?></td>                                   
+                                            <td><?php echo $data['fd_header'] ?></td>
+                                            <td><textarea name="" id=""><?php echo $data['fd_content'] ?></textarea></td>
+                                            <td><?php echo $data['category_n'] ?></td>
                                             <td width="140px">
-                                                <a href="updateforum.php?f_id=<?php echo $data["f_id"] ?>"
+                                                <a href="updateforum.php?f_id=<?php echo $data['f_id'] ?>"
                                                     class="btn btn-dark mb-2 mr-2"
                                                     style="margin-right: 5px;"
                                                     role="button"
                                                     data-bs-toggle="button"> แก้ไข </a>
-                                                <a href="removeforum.php?f_id=<?php echo $data["f_id"] ?>"
+                                                <a onclick="confirm(<?php echo $data['f_id'] ?>)" href="#"
                                                     class="btn btn-danger mb-2 mr-2"
                                                     style="margin-right: 5px;"
                                                     role="button"
@@ -164,10 +157,29 @@ if ($_SESSION['role'] == 2) {
             </div>
             <div class="col"></div>
         </div>
-
-
     </div>
     <!-- ส่วนคอลั่ม ข้อมูล -->
+    <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirm(id) {
+            console.log(id)
+            Swal.fire({
+                title: "คุณยืนยันที่จะทำรายการหรือไม่",
+                text: "คุณจะไม่สามารถย้อนกลับสิ่งที่ทำได้",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ยืนยัน"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'removeforum.php?f_id=' + id;
+                }
+            });
+        }
+    </script>
 
 </body>
 

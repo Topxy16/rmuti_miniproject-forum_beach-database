@@ -15,6 +15,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 
+
 $sql1 = 'SELECT `forum`.*, `comment`.*
 FROM `forum` 
 LEFT JOIN `comment` ON `comment`.`f_id` = `forum`.`f_id`
@@ -23,7 +24,6 @@ $stmt1 = $conn->prepare($sql1);
 $stmt1->bind_param('i', $fid);
 $stmt1->execute();
 $result1 = $stmt1->get_result();
-
 
 $sql3 = 'SELECT `comment`.*, `user`.*
 FROM `comment` 
@@ -38,12 +38,12 @@ $result3 = $stmt3->get_result();
 if (isset($_POST['ment_detail'])) {
     $userid = $_SESSION['user_id'];
     $mentdetail = $_POST['ment_detail'];
-    $mentdate = date("Y-m-d H:i:s");
+    $mentid = $_GET['ment_id'];
 
-    $sql2 = 'INSERT INTO comment (user_id, f_id, ment_detail, ment_status, ment_img, ment_datetime) VALUES (?, ?, ?, "1", NULL, ?)';
+    $sql2 = 'UPDATE `comment` SET `ment_detail` = ? WHERE `comment`.`ment_id` = ?';
     $stmt2 = $conn->prepare($sql2);
     if ($stmt2) {
-        $stmt2->bind_param('iiss', $userid, $fid, $mentdetail, $mentdate);
+        $stmt2->bind_param('si', $mentdetail, $mentid);
         $result2 = mysqli_stmt_execute($stmt2);
         if ($result2) {
             echo "<script>
@@ -54,7 +54,8 @@ if (isset($_POST['ment_detail'])) {
             showConfirmButton: false,
             timer: 2000 })
             </script>";
-            header("Refresh:2;");
+            header("Refresh:2; url=forum.php?f_id=".$_GET['f_id'] );
+
             exit();
         } else {
             echo "<script>
@@ -78,9 +79,11 @@ if (isset($_POST['ment_detail'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <title>forum beach</title>
 
+    <title>
+
+    </title>
+    
     <link href="css/styles.css" rel=" stylesheet">
     <style>
         .avatar {
@@ -145,71 +148,40 @@ if (isset($_POST['ment_detail'])) {
                     <div class="col-10">
                         <div class="card border-dark">
                             <div class="card-body">
+                                <?php if (@$_GET['ment_id'] == @$data['ment_id']) { ?>
+                                    <form method="post">
 
-                                <p class="card-text"><?php echo $data['ment_detail'] ?></p>
-                                <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> | ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>
-                           
-                                <?php if (@$_SESSION['user_id'] == @$data['user_id']) { ?>
-                                    <div style="text-align: right">
-                                        <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>" style="text-decoration: none; color:black;"><i class="bi bi-pencil"></i></a>
-                                        <a onclick="confirm(<?php echo $data['ment_id'] ?>,<?php echo $data['f_id'] ?>)" href="#"
-                                            style="text-decoration: none; color:black;">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    </div>
+                                        <div class="mb-3">                            
+                                           <textarea name="ment_detail" id="ment_detail" cols="100" rows="5"> <?php echo $data['ment_detail']?></textarea>                                    
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary">แก้ไขความเห็น</button>
+                                    </form>
+                                <?php } else { ?>
+                                    <p class="card-text"><?php echo $data['ment_detail'] ?></p>
+                                    <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> | ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>
 
+                                    <?php if (@$_SESSION['user_id'] == @$data['user_id']) { ?>
+                                        <div style="text-align: right">
+                                            <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>" style="text-decoration: none; color:black;"><i class="bi bi-pencil"></i></a>
+                                            <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>" style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
+                                        </div>
+                                    <?php } ?>
                                 <?php } ?>
-
-
                             </div>
                         </div>
                     </div>
                     <div class="col"></div>
                 </div>
             <?php } ?>
-            <div class="row justify-content-center align-items-center g-2 mt-3">
-                <div class="col"></div>
-                <div class="col-10">
-                    <div class="card border-dark">
-                        <div class="card-body">
-                            <form method="post">
-                                <textarea name="ment_detail" id="ment_detail" cols="100" rows="5"></textarea>
-                                <button type="submit" class="btn btn-success" style="width: 25%;">เพิ่มความเห็น</button>
-                                <small>สมาชิกหมายเลข : <?php echo $_SESSION['user_id'] ?></small>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col"></div>
-            </div>
+            
 
         <?php
         }
         ?>
     </div>
     <!-- ส่วนคอลั่ม ข้อมูล -->
-    <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function confirm(m_id,f_id) { 
-            Swal.fire({
-                title: "คุณยืนยันที่จะทำรายการหรือไม่",
-                text: "คุณจะไม่สามารถย้อนกลับสิ่งที่ทำได้",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                cancelButtonText: "ยกเลิก",
-                confirmButtonText: "ยืนยัน"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'removement.php?ment_id=' + m_id +'&f_id='+ f_id;
-                    
-                    
-                }
-            });
-        }
-    </script>
+
 </body>
 
 </html>
