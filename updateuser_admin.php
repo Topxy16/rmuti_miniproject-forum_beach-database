@@ -1,7 +1,8 @@
 <?php
 
 include("db.connect.php");
-include("navbar.php");
+include("structure/header.php");
+include("structure/navbar.php");
 
 if ($_SESSION['role'] == 2) {
     $sql = 'SELECT `user`.*, `profile`.* FROM `user`, `profile` WHERE user.user_id = profile.user_id AND user.user_id = ' . $_GET['user_id'];
@@ -81,45 +82,7 @@ if ($_SESSION['role'] == 2) {
 
 ?>
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>
-
-    </title>
-    <link href="css/styles.css" rel=" stylesheet">
-    <style>
-        .avatar {
-
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-
-            border-width: 1px;
-            border-style: solid;
-            border-color: black;
-
-            margin-top: 15px;
-            margin-bottom: auto;
-            margin-left: 15px;
-            margin-right: auto;
-        }
-
-        .btn-color {
-            background-color: #2A5360;
-            color: #ffff;
-        }
-    </style>
-</head>
-
 <body>
-
-
-    <!-- ส่วนคอลั่ม ข้อมูล -->
     <div class="container mt-5">
         <div class="row mt-2 justify-content-center align-items-center g-2">
             <?php
@@ -151,8 +114,5 @@ if ($_SESSION['role'] == 2) {
         </div>
 
     </div>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
-
 </body>
-
-</html>
+<?php include('structure/footer.php') ?>

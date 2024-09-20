@@ -1,7 +1,8 @@
 <?php
 
 include("db.connect.php");
-include("navbar.php");
+include("structure/header.php");
+include("structure/navbar.php");
 
 $fid = $_GET['f_id'];
 
@@ -72,43 +73,8 @@ if (isset($_POST['ment_detail'])) {
 
 ?>
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <title>forum beach</title>
-
-    <link href="css/styles.css" rel=" stylesheet">
-    <style>
-        .avatar {
-
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-
-            border-width: 1px;
-            border-style: solid;
-            border-color: black;
-
-            margin-top: 15px;
-            margin-bottom: auto;
-            margin-left: 15px;
-            margin-right: auto;
-        }
-    </style>
-</head>
-
 <body>
-
-
-    <!-- ส่วนคอลั่ม ข้อมูล -->
     <div class="container">
-
-
-
         <?php
         while ($data = mysqli_fetch_assoc($result)) {
         ?>
@@ -123,10 +89,8 @@ if (isset($_POST['ment_detail'])) {
                             <div class="col">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $data['fd_header'] ?></h5>
-                                    <p class="card-text"><?php echo $data['fd_content'] ?></p>
-                                    <!-- เส้นใต้จาง -->
-                                    <div class="underline"></div>
-                                    <!-- เพิ่มส่วนแสดงสถานะ -->
+                                    <p class="card-text"><?php echo $data['fd_content'] ?></p>                              
+                                    <div class="underline"></div>                 
                                     <div class="align-items-center">
                                         <div class="vr"></div>
                                         <span class="card-text"><small class="text-body-secondary"><?php echo $data['fd_datetime'] ?></small></span>
@@ -145,10 +109,8 @@ if (isset($_POST['ment_detail'])) {
                     <div class="col-10">
                         <div class="card border-dark">
                             <div class="card-body">
-
                                 <p class="card-text"><?php echo $data['ment_detail'] ?></p>
-                                <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> | ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>
-                           
+                                <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> | ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>                           
                                 <?php if (@$_SESSION['user_id'] == @$data['user_id']) { ?>
                                     <div style="text-align: right">
                                         <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>" style="text-decoration: none; color:black;"><i class="bi bi-pencil"></i></a>
@@ -157,10 +119,7 @@ if (isset($_POST['ment_detail'])) {
                                             <i class="bi bi-trash"></i>
                                         </a>
                                     </div>
-
                                 <?php } ?>
-
-
                             </div>
                         </div>
                     </div>
@@ -182,12 +141,10 @@ if (isset($_POST['ment_detail'])) {
                 </div>
                 <div class="col"></div>
             </div>
-
         <?php
         }
         ?>
     </div>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
     <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -211,5 +168,4 @@ if (isset($_POST['ment_detail'])) {
         }
     </script>
 </body>
-
-</html>
+<?php include('structure/footer.php') ?>

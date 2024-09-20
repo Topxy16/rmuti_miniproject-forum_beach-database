@@ -1,81 +1,42 @@
 <?php
 
 include("db.connect.php");
-include("navbar.php");
+include("structure/header.php");
+include("structure/navbar.php");
 
 $sql = 'SELECT * FROM forum_detail';
 $result = mysqli_query($conn, query: $sql);
 
 ?>
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>หน้าแรก</title>
-
-    <link href="css/styles.css" rel=" stylesheet">
-    <style>
-        .avatar {
-            
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-
-            border-width: 1px;
-            border-style: solid;
-            border-color: black;
-
-            margin-top: 15px;
-            margin-bottom: auto;
-            margin-left: 15px;
-            margin-right: auto;
-        }
-    </style>
-</head>
-
 <body>
-
-
-    <!-- ส่วนคอลั่ม ข้อมูล -->
     <div class="container">
-
-        <h2 class ="mt-2">กระทู้น่าสนใจ</h2>
-        
+        <h2 class="mt-2">ฟอรัม</h2>
         <?php
         while ($data = mysqli_fetch_assoc($result)) {
         ?>
             <div class="row mt-2 justify-content-center align-items-center g-2">
                 <div class="col"></div>
                 <div class="col-10">
-                    <a href="forum.php?f_id=<?php echo $data["f_id"]?>" style="text-decoration: none;">
+                    <a href="forum.php?f_id=<?php echo $data["f_id"] ?>" style="text-decoration: none;">
                         <div class="card border-dark mb-3">
-                        <div class="row g-0">
-                            <div class="col-1 d-flex">
-                                <img src="img/qa.png" alt="Avatar" class="avatar">
-                            </div>
-                            <div class="col">
-                    
-                                <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['fd_header'] ?></h5>
-                                    <p class="card-text"><?php echo $data['fd_content'] ?></p>
-                                    <!-- เส้นใต้จาง -->
-                                    <div class="underline"></div>
-                                    <!-- เพิ่มส่วนแสดงสถานะ -->
-                                    <div class="align-items-center">
-                                        <div class="vr"></div>
-                                        <span class="card-text"><small class="text-body-secondary"><?php echo $data['fd_datetime'] ?></small></span>
+                            <div class="row g-0">
+                                <div class="col-1 d-flex">
+                                    <img src="img/qa.png" alt="avatar" class="avatar">
+                                </div>
+                                <div class="col">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $data['fd_header'] ?></h5>
+                                        <p class="card-text"><?php echo $data['fd_content'] ?></p>
+                                        <div class="underline"></div>
+                                        <div class="align-items-center">
+                                            <div class="vr"></div>
+                                            <span class="card-text"><small class="text-body-secondary"><?php echo $data['fd_datetime'] ?></small></span>
+                                        </div>
                                     </div>
                                 </div>
-
-                
-                              
                             </div>
                         </div>
-                    </div>
                     </a>
                 </div>
                 <div class="col"></div>
@@ -84,8 +45,5 @@ $result = mysqli_query($conn, query: $sql);
         }
         ?>
     </div>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
-
 </body>
-
-</html>
+<?php include('structure/footer.php') ?>

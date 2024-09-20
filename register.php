@@ -1,6 +1,8 @@
 <?php
-include("navbar.php");
+
 include("db.connect.php");
+include("structure/header.php");
+include("structure/navbar.php");
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
@@ -44,18 +46,6 @@ if (isset($_POST['email'])) {
     }
 }
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สมัคสมาชิก</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-
 <body>
     <div class="contrainer mt-5">
         <div class="row justify-content-center align-items-center g-2">
@@ -89,5 +79,4 @@ if (isset($_POST['email'])) {
         </div>
     </div>
 </body>
-
-</html>
+<?php include('structure/footer.php') ?>

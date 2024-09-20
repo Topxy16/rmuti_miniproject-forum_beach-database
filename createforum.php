@@ -1,7 +1,8 @@
 <?php
 
-include("navbar.php");
 include("db.connect.php");
+include("structure/header.php");
+include("structure/navbar.php");
 
 if (!empty($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
@@ -69,28 +70,7 @@ $result3 = mysqli_query($conn, $sql3);
 
 ?>
 
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เขียนกระทู้</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-
-<style>
-    .btn-color {
-        background-color: #2A5360;
-        color: #ffff;
-    }
-</style>
-
 <body>
-
     <div class="container mt-5">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
@@ -124,11 +104,8 @@ $result3 = mysqli_query($conn, $sql3);
                     <button type="submit" class="btn btn-color" style="width: 100%;">ยืนยัน</button>
                 </form>
             </div>
-            <div class="col">
-
-            </div>
+            <div class="col"></div>
         </div>
     </div>
 </body>
-
-</html>
+<?php include('structure/footer.php') ?>

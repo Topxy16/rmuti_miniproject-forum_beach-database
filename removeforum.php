@@ -1,6 +1,7 @@
 <?php
-include('db.connect.php');
-include('navbar.php');
+include("db.connect.php");
+include("structure/header.php");
+include("structure/navbar.php");
 
 $sql = 'DELETE FROM forum WHERE f_id  = ' . $_GET['f_id'];
 $result = mysqli_query($conn, $sql);

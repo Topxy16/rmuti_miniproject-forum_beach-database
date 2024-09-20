@@ -1,7 +1,8 @@
 <?php
 
 include("db.connect.php");
-include("navbar.php");
+include("structure/header.php");
+include("structure/navbar.php");
 
 $fid = $_GET['f_id'];
 
@@ -13,8 +14,6 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $fid);
 $stmt->execute();
 $result = $stmt->get_result();
-
-
 
 $sql1 = 'SELECT `forum`.*, `comment`.*
 FROM `forum` 
@@ -73,45 +72,8 @@ if (isset($_POST['ment_detail'])) {
 
 ?>
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>
-
-    </title>
-    
-    <link href="css/styles.css" rel=" stylesheet">
-    <style>
-        .avatar {
-
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-
-            border-width: 1px;
-            border-style: solid;
-            border-color: black;
-
-            margin-top: 15px;
-            margin-bottom: auto;
-            margin-left: 15px;
-            margin-right: auto;
-        }
-    </style>
-</head>
-
 <body>
-
-
-    <!-- ส่วนคอลั่ม ข้อมูล -->
     <div class="container">
-
-
-
         <?php
         while ($data = mysqli_fetch_assoc($result)) {
         ?>
@@ -173,15 +135,10 @@ if (isset($_POST['ment_detail'])) {
                     </div>
                     <div class="col"></div>
                 </div>
-            <?php } ?>
-            
-
+            <?php } ?>            
         <?php
         }
         ?>
     </div>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
-
 </body>
-
-</html>
+<?php include('structure/footer.php') ?>

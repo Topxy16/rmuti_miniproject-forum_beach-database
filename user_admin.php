@@ -1,7 +1,8 @@
 <?php
 
 include("db.connect.php");
-include("navbar.php");
+include("structure/header.php");
+include("structure/navbar.php");
 
 
 if ($_SESSION['role'] == 2) {
@@ -37,49 +38,7 @@ WHERE forum.f_id IS NULL;';
 
 ?>
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>ระบบจัดการผู้ใช้งาน</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/offcanvas-navbar/">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
-    <link href="css/styles.css" rel=" stylesheet">
-    <link href="css/table.css" rel=" stylesheet">
-
-    <style>
-        .btn-color {
-
-            background-color: #2A5360;
-            color: #ffff;
-        }
-
-        .text-custom {
-            text-align: right;
-
-        }
-
-        .card-count {
-            height: 110px;
-        }
-
-        
-    </style>
-
-</head>
-
 <body>
-
-
-    <!-- ส่วนคอลั่ม ข้อมูล -->
     <div class="container mt-5">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col">
@@ -88,11 +47,10 @@ WHERE forum.f_id IS NULL;';
                         <div class="row justify-content-center align-items-center g-2">
                             <div class="col">
                                 <small style="margin-left: 5px;">จำนวนผู้ใช้งาน</small>
-
                                 <h4 style="margin-left: 5px;"><?php echo $usercount ?></h4>
                             </div>
                             <div class="col">
-                                <p class="bi bi-person display-4 text-custom"></p>
+                                <p class="bi bi-person display-4 " style="text-align: right;"></p>
                             </div>
                         </div>
                     </div>
@@ -104,11 +62,10 @@ WHERE forum.f_id IS NULL;';
                         <div class="row justify-content-center align-items-center g-2">
                             <div class="col">
                                 <small style="margin-left: 5px;">เคยสร้างฟอรัมแล้ว</small>
-
                                 <h4 style="margin-left: 5px;"><?php echo $usercreateforum ?></h4>
                             </div>
                             <div class="col">
-                                <p class="bi bi-file-text display-4 text-custom"></p>
+                                <p class="bi bi-file-text display-4" style="text-align: right;"></p>
                             </div>
                         </div>
                     </div>
@@ -119,19 +76,17 @@ WHERE forum.f_id IS NULL;';
                     <div class="card-body">
                         <div class="row justify-content-center align-items-center g-2">
                             <div class="col">
-                                <small style="margin-left: 5px;">ยังเคยสร้างฟอรัม</small>
+                                <small style="margin-left: 5px;">ยังไม่เคยสร้างฟอรัม</small>
                                 <h4 style="margin-left: 5px;"><?php echo $useruncreateforum ?></h4>
                             </div>
                             <div class="col">
-                                <p class="bi bi-file-x display-4 text-custom"></p>
+                                <p class="bi bi-file-x display-4" style="text-align: right;"></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-       
+        </div>     
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
             <div class="col-12">
@@ -171,10 +126,6 @@ WHERE forum.f_id IS NULL;';
             </div>
             <div class="col"></div>
         </div>
-
     </div>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
-
 </body>
-
-</html>
+<?php include('structure/footer.php') ?>
