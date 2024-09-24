@@ -49,7 +49,7 @@ if ($_SESSION['role'] == 2) {
                                     }
                                 ?>
                                     <div class="col-1 justify-content-center align-items-center text-center">
-                                        <img src="img/qa.png" alt="Avatar" class="avatar" style="margin:auto;">
+                                    <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>" alt="Avatar" class="avatar" style="margin:auto;">
                                         <p><?php echo $data['user_n'] ?></p>
                                     </div>
                                 <?php

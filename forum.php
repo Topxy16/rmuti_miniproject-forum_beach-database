@@ -6,10 +6,13 @@ include("structure/navbar.php");
 
 $fid = $_GET['f_id'];
 
-$sql = 'SELECT `forum`.*, `forum_detail`.*, `profile`.* 
+$sql = 'SELECT `forum`.*, `category`.*, `forum_detail`.*, `forum_image`.*, `profile`.*
 FROM `forum` 
-INNER JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` 
-INNER JOIN `profile` ON `forum`.`user_id` = `profile`.`user_id` WHERE forum.f_id = ?';
+	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
+	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` 
+	LEFT JOIN `forum_image` ON `forum_image`.`f_id` = `forum`.`f_id`
+	LEFT JOIN `profile` ON `profile`.`user_id` = `forum`.`user_id`
+    WHERE forum.f_id = ?';
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $fid);
 $stmt->execute();
@@ -72,6 +75,7 @@ if (isset($_POST['ment_detail'])) {
 }
 
 ?>
+
 <body>
     <div class="container">
         <?php
@@ -87,9 +91,11 @@ if (isset($_POST['ment_detail'])) {
                             </div>
                             <div class="col">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data['fd_header'] ?></h5>
-                                    <p class="card-text"><?php echo $data['fd_content'] ?></p>                              
-                                    <div class="underline"></div>                 
+                                    <h5 class="card-title"><b><?php echo $data['fd_header'] ?></b></h5>
+                                    <span class="card-text"><small class="text-body-secondary"><?php echo $data['category_n'] ?></small></span>
+                                    <p class="card-text"><?php echo $data['fd_content'] ?></p>
+                                    <img src="<?php echo $data['image']?>" alt="" style="max-width: 100%; height: 400px; ">
+                                    <div class="underline"></div>
                                     <div class="align-items-center">
                                         <div class="vr"></div>
                                         <span class="card-text"><small class="text-body-secondary"><?php echo $data['fd_datetime'] ?></small></span>
@@ -103,27 +109,32 @@ if (isset($_POST['ment_detail'])) {
                 <div class="col"></div>
             </div>
             <?php while ($data = mysqli_fetch_assoc($result1)) { ?>
-                <div class="row justify-content-center align-items-center g-2 mt-2">
-                    <div class="col"></div>
-                    <div class="col-10">
-                        <div class="card border-dark">
-                            <div class="card-body">
-                                <p class="card-text"><?php echo $data['ment_detail'] ?></p>
-                                <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> | ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>                           
-                                <?php if (@$_SESSION['user_id'] == @$data['user_id']) { ?>
-                                    <div style="text-align: right">
-                                        <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>" style="text-decoration: none; color:black;"><i class="bi bi-pencil"></i></a>
-                                        <a onclick="confirm(<?php echo $data['ment_id'] ?>,<?php echo $data['f_id'] ?>)" href="#"
-                                            style="text-decoration: none; color:black;">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    </div>
-                                <?php } ?>
+                <?php if (!empty($data['f_id'])) { ?>
+
+                    <div class="row justify-content-center align-items-center g-2 mt-2">
+
+                        <div class="col"></div>
+                        <div class="col-10">
+
+                            <div class="card border-dark">
+                                <div class="card-body">
+                                    <p class="card-text"><?php echo $data['ment_detail'] ?></p>
+                                    <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> | ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>
+                                    <?php if (@$_SESSION['user_id'] == @$data['user_id']) { ?>
+                                        <div style="text-align: right">
+                                            <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>" style="text-decoration: none; color:black;"><i class="bi bi-pencil"></i></a>
+                                            <a onclick="confirm(<?php echo $data['ment_id'] ?>,<?php echo $data['f_id'] ?>)" href="#"
+                                                style="text-decoration: none; color:black;">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    <?php } ?>
+                                </div>
                             </div>
                         </div>
+                        <div class="col"></div>
                     </div>
-                    <div class="col"></div>
-                </div>
+                <?php } ?>
             <?php } ?>
             <div class="row justify-content-center align-items-center g-2 mt-3">
                 <div class="col"></div>
@@ -147,7 +158,7 @@ if (isset($_POST['ment_detail'])) {
     <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function confirm(m_id,f_id) {
+        function confirm(m_id, f_id) {
             Swal.fire({
                 title: "คุณยืนยันที่จะทำรายการหรือไม่",
                 text: "คุณจะไม่สามารถย้อนกลับสิ่งที่ทำได้",
@@ -159,10 +170,10 @@ if (isset($_POST['ment_detail'])) {
                 confirmButtonText: "ยืนยัน"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'removement.php?ment_id=' + m_id +'&f_id='+ f_id;                   
+                    window.location.href = 'removement.php?ment_id=' + m_id + '&f_id=' + f_id;
                 }
             });
         }
     </script>
 
-<?php include('structure/footer.php') ?>
+    <?php include('structure/footer.php') ?>

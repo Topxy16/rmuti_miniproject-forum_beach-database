@@ -26,7 +26,7 @@ $result1 = mysqli_query($conn, query: $sql1);
                     <div class="card border-dark mb-3">
                         <div class="row g-0">
                             <div class="col-1 d-flex">
-                                <img src="img/qa.png" alt="Avatar" class="avatar">
+                                <a href="imageprofile.php"><img src="<?php echo $data['image'] ?>" alt="Avatar" class="avatar"></a>
                             </div>
                             <div class="col">
                                 <div class="card-body">
@@ -37,8 +37,8 @@ $result1 = mysqli_query($conn, query: $sql1);
                                 </div>
                             </div>
                             <div class="col d-flex align-items-end flex-column">
-                                <a href="updateprofile" class="btn btn-color w-10 mt-auto mb-2 mr-2"
-                                    style="margin-right: 10px;" role="button" data-bs-toggle="button">แก้ไขข้อมูลส่วนตัว</a>
+                                <a href="updateprofile.php?user_id=<?php echo $data['user_id']?>" class="btn btn-color w-10 mt-auto mb-2 mr-2"
+                                    style="margin-right: 10px;">แก้ไขข้อมูลส่วนตัว</a>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@ $result1 = mysqli_query($conn, query: $sql1);
                             </div>
                             <div class="col d-flex justify-content-end align-items-end" style="height: 100%;">
                                 <a href="updateforum.php?f_id=<?php echo $data["f_id"] ?>" class="btn btn-color mb-2 mr-2" style="margin-right: 5px;">แก้ไขฟอรัม</a>
-                                <a href="removeforum.php?f_id=<?php echo $data["f_id"] ?>" class="btn btn-danger mb-2" style="margin-right: 10px;">ลบฟอรัม</a>
+                                <a onclick="confirm(<?php echo $data['f_id'] ?>)" href="#" class="btn btn-danger mb-2" style="margin-right: 10px;">ลบฟอรัม</a>
                             </div>
                         </div>
                     </a>
@@ -85,5 +85,25 @@ $result1 = mysqli_query($conn, query: $sql1);
         }
         ?>
     </div>
-
-<?php include('structure/footer.php') ?>
+    <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirm(id) {
+            console.log(id)
+            Swal.fire({
+                title: "คุณยืนยันที่จะทำรายการหรือไม่",
+                text: "คุณจะไม่สามารถย้อนกลับสิ่งที่ทำได้",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ยืนยัน"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'removeforum.php?f_id=' + id;
+                }
+            });
+        }
+    </script>
+    <?php include('structure/footer.php') ?>

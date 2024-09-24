@@ -10,7 +10,6 @@ $result = mysqli_query($conn, query: $sql);
 ?>
 
 <body>
-    <div class="hero">
         <div class="container">
             <h2 class="mt-2">ฟอรัม</h2>
             <?php
@@ -46,5 +45,4 @@ $result = mysqli_query($conn, query: $sql);
             }
             ?>
         </div>
-    </div>
     <?php include('structure/footer.php') ?>

@@ -48,7 +48,7 @@ if ($_SESSION['role'] == 2) {
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3>ความคิดเห็น</h3>
+                        <h3>ตารางจัดการความคิดเห็น</h3>
                         <div class="table-responsive">
                             <table id="table" class="table">
                                 <thead>
@@ -56,7 +56,6 @@ if ($_SESSION['role'] == 2) {
                                     <th>ไอดีผู้โพสต์ความเห็น</th>
                                     <th>ไอดีฟอรัม</th>
                                     <th>ความเห็น</th>
-                                    <th>ถูกแก้ไข</th>
                                     <th>วันเวลา</th>
                                     <th>เครื่องมือ</th>
                                 </thead>
@@ -67,7 +66,6 @@ if ($_SESSION['role'] == 2) {
                                             <td><?php echo $data['user_id'] ?></td>
                                             <td><?php echo $data['f_id'] ?></td>
                                             <td><textarea disabled cols="40"><?php echo $data['ment_detail'] ?></textarea></td>
-                                            <td><?php echo $data['ment_status'] ?></td>
                                             <td><?php echo $data['ment_datetime'] ?></td>
                                             <td width="140px">
                                                 <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $data['f_id'] ?>"

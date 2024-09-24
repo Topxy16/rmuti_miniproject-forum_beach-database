@@ -34,7 +34,7 @@ if ($_SESSION['role'] == 2) {
                                 <h4 style="margin-left: 5px;"><?php echo $count_c ?></h4>
                             </div>
                             <div class="col">
-                                <p class="bi bi-grid-fill display-5" style="text-align:end"></p>
+                                <p class="bi bi-grid display-5" style="text-align:end"></p>
                             </div>
                         </div>
                     </div>
@@ -50,17 +50,17 @@ if ($_SESSION['role'] == 2) {
                         <div class="table-responsive">
                             <table id="table" class="table table-hover">
                                 <thead>
-                                    <th>ไอดีประเภท</th>
-                                    <th>ชื่อประเภท</th>
+                                    <th width="150px">ไอดีประเภท</th>
+                                    <th width="950px">ชื่อประเภท</th>
                                     <th>เครื่องมือ</th>
                                     
                                 </thead>
                                 <tbody>
                                     <?php while ($data = mysqli_fetch_assoc($result)) { ?>
                                         <tr>
-                                            <td width=""><?php echo $data['category_id'] ?></td>
+                                            <td><?php echo $data['category_id'] ?></td>
                                             <td><?php echo $data['category_n'] ?></td>  
-                                            <td width="140px">
+                                            <td>
                                                 <a href="updatecategory.php?category_id=<?php echo $data['category_id'] ?>"
                                                     class="btn btn-dark mb-2 mr-2"
                                                     style="margin-right: 5px;"
