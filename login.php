@@ -16,11 +16,8 @@ if (isset($_POST['email'])) {
     $data = $result->fetch_assoc();
 
     if ($data && $email == $data['email'] && md5($pass) == $data['pass']) {
-        // เก็บข้อมูล session ของผู้ใช้
-        session_start();
         $_SESSION['user_id'] = $data['user_id'];
         $_SESSION['role'] = $data['role'];
-        print_r($_SESSION);
         header('location:index.php');
     } else {
         echo "<script>
@@ -36,35 +33,35 @@ if (isset($_POST['email'])) {
     }
 }
 ?>
+
 <body>
-    
-    <div class="contrainer mt-5">
+    <div class="contrainer" style="margin-top: 200px;">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
-            <div class="col-3">
-                <div class="card border-dark">
+            <div class="col-2">
+                <div class="card">
                     <div class="card-body">
                         <div class="card-title">
-                            <h2>เข้าสู่ระบบ</h2>
+                            <h2 class="mb-5 mt-3" style="text-align: center;">ลงชื่อเข้าใช้งาน</h2>
                         </div>
                         <form method="post">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">อีเมล</label>
-                                <input type="email" class="form-control " id="email" name="email" aria-describedby="emailHelp" placeholder="กรอก อีเมล" required>
+                 
+                                <input type="email" class="form-control " id="email" name="email" aria-describedby="emailHelp" placeholder="อีเมล" required>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">รหัสผ่าน</label>
-                                <input type="password" class="form-control" id="pass" name="pass" placeholder="กรอก รหัสผ่าน" required>
+                          
+                                <input type="password" class="form-control" id="pass" name="pass" placeholder="รหัสผ่าน" required>
                             </div>
-                            <button type="submit" class="btn btn-success" style="width: 100%;">ยืนยัน</button>
-                           
+                            <button type="submit" class="btn btn-color mb-3" style="width: 100%;">เข้าสู่ระบบ</button>
                         </form>
-                        <a href="register.php" class="btn btn-primary w-100 mt-2" role="button" data-bs-toggle="button">สมัคสมาชิก</a>
+                        <div class="regis" style="text-align: center;">
+                        ยังไม่เป็นสมาชิก? <a href="register.php" style="text-decoration: underline;">สมัคสมาชิก</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col"></div>
         </div>
     </div>
-
-<?php include('structure/footer.php') ?>
+    <?php include('structure/footer.php') ?>

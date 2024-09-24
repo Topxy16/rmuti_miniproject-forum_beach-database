@@ -2,4 +2,31 @@ body {
     font-family: "Prompt", sans-serif;
     font-weight: 400;
     font-style: normal;
+    background-color: #6A9AB0;
+    color: #fff;
+    
+}
+
+.card {
+    background-color: #3A6D8C;
+    color: #fff;
+}
+
+.card-header {
+    background-color: #001F3F;
+    color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #fff;
 }

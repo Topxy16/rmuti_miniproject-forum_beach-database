@@ -1,12 +1,43 @@
 .custom-navbar {
-    background-color: #2A5360; /* สีเขียว */
-  }
+  background-color: #3A6D8C;
+}
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link {
+  color: #ffffff;
+}
+.custom-navbar .nav-link:hover {
+  color: #d4c1b3;
+}
+.nav-ico {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  margin-right: 5px;
+}
 
-  .custom-navbar .navbar-brand, .custom-navbar .nav-link {
-    color: #ffffff; /* สีข้อความ */
-  }
+.nav-ico span {
+  font-size: 16px;
+}
 
-  .custom-navbar .nav-link:hover {
-    color: #d4c1b3; /* สีข้อความเมื่อ hover */
-  }
+.nav-ico:hover {
+  width: 110px;
+}
 
+.nav-ico .ico {
+  text-align: center;
+  border-radius: 50px;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-ico .ico i {
+  font-size: 20px;
+  line-height: 35px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-ico:hover i {
+  color: #fff;
+}

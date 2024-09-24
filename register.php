@@ -47,31 +47,33 @@ if (isset($_POST['email'])) {
 }
 ?>
 <body>
-    <div class="contrainer mt-5">
+    <div class="contrainer" style="margin-top: 200px;">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
-            <div class="col-3">
-                <div class="card border-dark">
+            <div class="col-2">
+                <div class="card">
                     <div class="card-body">
                         <div class="card-title">
-                            <h2>สมัคสมาชิก</h2>
+                        <h2 class="mb-5 mt-3" style="text-align: center;">สมัคสมาชิก</h2>
                         </div>
                         <form method="post">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">อีเมล</label>
-                                <input type="email" class="form-control " id="email" name="email" aria-describedby="emailHelp" placeholder="กรอก อีเมล" required>
+
+                                <input type="email" class="form-control " id="email" name="email" aria-describedby="emailHelp" placeholder="อีเมล" required>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">ชื่อผู้ใช้</label>
-                                <input type="text" class="form-control " id="user_n" name="user_n" aria-describedby="" placeholder="กรอก ชื่อผู้ใช้" required>
+
+                                <input type="text" class="form-control " id="user_n" name="user_n" aria-describedby="" placeholder="ชื่อผู้ใช้" required>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">รหัสผ่าน</label>
-                                <input type="password" class="form-control" id="pass" name="pass" placeholder="กรอก รหัสผ่าน" required>
+
+                                <input type="password" class="form-control" id="pass" name="pass" placeholder="รหัสผ่าน" required>
                             </div>
-                            <button type="submit" class="btn btn-success" style="width: 100%;">ยืนยัน</button>
+                            <button type="submit" class="btn btn-color mb-3" style="width: 100%;">ยืนยัน</button>
                         </form>
-                        <a href="login.php" class="btn btn-primary w-100 mt-2" role="button" data-bs-toggle="button">เข้าสู่ระบบ</a>
+                        <div class="regis" style="text-align: center;">
+                        เป็นสมาชิกแล้ว? <a href="login.php" style="text-decoration: underline;">เข้าสู่ระบบ</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -120,5 +120,7 @@ if (!empty($_POST)) {
         </div>
 
     </div>
-
+    <script>
+            document.title = "แก้ไขฟอรัม";
+        </script>
 <?php include('structure/footer.php') ?>

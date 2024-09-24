@@ -12,7 +12,7 @@ if ($_SESSION['role'] == 2) {
         $email = $_POST['email'];
         $pass = md5($_POST['pass']);
         $userid = $_GET['user_id'];
-        
+
         $sql2 = 'UPDATE user SET email = ?, pass = ? WHERE user_id = ?';
         $stmt = mysqli_prepare($conn, $sql2);
 
@@ -114,5 +114,8 @@ if ($_SESSION['role'] == 2) {
         </div>
 
     </div>
+    <script>
+        document.title = "แก้ไข้ผู้ใช้งาน";
+    </script>
 
-<?php include('structure/footer.php') ?>
+    <?php include('structure/footer.php') ?>

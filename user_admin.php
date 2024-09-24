@@ -148,5 +148,7 @@ WHERE forum.f_id IS NULL;';
             });
         }
     </script>
-
+        <script>
+            document.title = "ผู้ใช้งาน";
+        </script>
 <?php include('structure/footer.php') ?>

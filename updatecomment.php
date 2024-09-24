@@ -140,5 +140,7 @@ if (isset($_POST['ment_detail'])) {
         }
         ?>
     </div>
-
+    <script>
+        document.title = "แก้ไขความคิด";
+    </script>
 <?php include('structure/footer.php') ?>

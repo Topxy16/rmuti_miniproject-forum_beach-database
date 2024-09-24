@@ -94,7 +94,7 @@ if (isset($_POST['ment_detail'])) {
                                     <h5 class="card-title"><b><?php echo $data['fd_header'] ?></b></h5>
                                     <span class="card-text"><small class="text-body-secondary"><?php echo $data['category_n'] ?></small></span>
                                     <p class="card-text"><?php echo $data['fd_content'] ?></p>
-                                    <img src="<?php echo $data['image']?>" alt="" style="max-width: 100%; height: 400px; ">
+                                    <img src="<?php echo $data['fpic_image']?>" alt="" style="max-width: 100%; height: 400px; ">
                                     <div class="underline"></div>
                                     <div class="align-items-center">
                                         <div class="vr"></div>
@@ -155,8 +155,7 @@ if (isset($_POST['ment_detail'])) {
         }
         ?>
     </div>
-    <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         function confirm(m_id, f_id) {
             Swal.fire({
@@ -175,5 +174,7 @@ if (isset($_POST['ment_detail'])) {
             });
         }
     </script>
-
+        <script>
+            document.title = "ฟอรัม";
+        </script>
     <?php include('structure/footer.php') ?>

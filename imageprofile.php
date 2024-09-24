@@ -63,17 +63,20 @@ if (@is_uploaded_file($_FILES['dspPic']['tmp_name'])) {
 
 ?>
 <body>
-    <div class="container mt-5">
+    <div class="container" style="margin-top: 100px;">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
             <div class="col">
                 <div class="card">
+                <div class="card-header" style="text-align:center;">
+                            <h2>เพิ่มรูปโปรไฟล์</h2>
+                        </div>
                     <div class="card-body">
                         <img id="previewImage" class="card-img-top" src="img/pre.jpg" style="max-width: 100%; height: auto;">
                         <div class="mb-3">
                             <form method="post" enctype="multipart/form-data">
                                 <input class="form-control mt-2" type="file" id="dspPic" name="dspPic" accept="image/*">
-                                <button type="submit" class="btn btn-success" style="width: 100%;">ยืนยัน</button>
+                                <button type="submit" class="btn btn-color mt-2" style="width: 100%;">ยืนยัน</button>
                             </form>
                         </div>
                     </div>
@@ -112,4 +115,7 @@ if (@is_uploaded_file($_FILES['dspPic']['tmp_name'])) {
             previewImage.src = defaultImage; // Reset to default image when form is reset
         });
     </script>
+       <script>
+            document.title = "เพิ่มรูปโปร";
+        </script>
     <?php include('structure/footer.php') ?>

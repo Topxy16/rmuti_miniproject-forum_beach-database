@@ -35,7 +35,7 @@ if ($_SESSION['role'] == 2) {
                     <div class="card-body">
                         <div class="row justify-content-center align-items-center g-2">
                             <div class="col">
-                                <small style="margin-left: 5px;">จำนวนฟอรัม</small>                                
+                                <small style="margin-left: 5px;">จำนวนฟอรัม</small>
                                 <h4 style="margin-left: 5px;"><?php echo $count_f ?></h4>
                             </div>
                             <div class="col">
@@ -44,7 +44,7 @@ if ($_SESSION['role'] == 2) {
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
@@ -73,13 +73,11 @@ if ($_SESSION['role'] == 2) {
                                             <td width="140px">
                                                 <a href="updateforum.php?f_id=<?php echo $data['f_id'] ?>"
                                                     class="btn btn-dark mb-2 mr-2"
-                                                    style="margin-right: 5px;"
-                                                    > แก้ไข </a>
+                                                    style="margin-right: 5px;"> แก้ไข </a>
                                                 <a onclick="confirm(<?php echo $data['f_id'] ?>)" href="#"
                                                     class="btn btn-danger mb-2 mr-2"
-                                                    style="margin-right: 5px;"
-                                                    > ลบ </a>
-                                            
+                                                    style="margin-right: 5px;"> ลบ </a>
+
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -114,4 +112,7 @@ if ($_SESSION['role'] == 2) {
             });
         }
     </script>
-<?php include('structure/footer.php') ?>
+    <script>
+        document.title = "ฟอรัม";
+    </script>
+    <?php include('structure/footer.php') ?>

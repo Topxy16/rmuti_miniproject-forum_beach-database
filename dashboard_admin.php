@@ -28,8 +28,6 @@ if ($_SESSION['role'] == 2) {
             </script>";
     header("Refresh:2; url=index.php");
 }
-
-
 ?>
 
 <body>
@@ -38,7 +36,7 @@ if ($_SESSION['role'] == 2) {
         <div class="row justify-content-center align-items-center">
             <div class="col">
                 <a href="user_admin.php" style="text-decoration: none; color:#000;">
-                    <div class="card border-dark">
+                    <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">ผู้ใช้งาน</h4>
                             <div class="row justify-content-center align-items-center">
@@ -49,7 +47,7 @@ if ($_SESSION['role'] == 2) {
                                     }
                                 ?>
                                     <div class="col-1 justify-content-center align-items-center text-center">
-                                    <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>" alt="Avatar" class="avatar" style="margin:auto;">
+                                        <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>" alt="Avatar" class="avatar" style="margin:auto;">
                                         <p><?php echo $data['user_n'] ?></p>
                                     </div>
                                 <?php
@@ -64,8 +62,8 @@ if ($_SESSION['role'] == 2) {
         </div>
         <div class="row">
             <div class="col mt-3">
-                <div class="card border-dark">
-                    <a href="forum_admin.php" style="text-decoration: none; color:#000;">
+                <div class="card">
+                    <a href="forum_admin.php">
                         <div class="card-body">
                             <h4 class="card-title">ตารางจัดการฟอรัม</h4>
                             <table class="table table-bordered" style="width:100%">
@@ -100,9 +98,9 @@ if ($_SESSION['role'] == 2) {
                 <div>
                     <div class="col">
                         <a href="comment_admin.php" style="text-decoration: none; color:#000;">
-                            <div class="card border-dark">
+                            <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">ความคิดเห็น</h4>
+                                    <h4 class="card-title">ตารางจัดการความคิดเห็น</h4>
                                     <table class="table table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
@@ -134,7 +132,7 @@ if ($_SESSION['role'] == 2) {
                     <a href="category_admin.php" style="text-decoration: none; color:#000;">
                         <div class="mt-2">
                             <div class="col">
-                                <div class="card border-dark text-center">
+                                <div class="card text-center">
                                     <div class="card-body">
                                         <h4 class="card-title">ประเภทฟอรัม</h4>
                                         <i class="bi bi-heart-half icon-custom"></i>
@@ -148,4 +146,7 @@ if ($_SESSION['role'] == 2) {
             </div>
         </div>
     </div>
+    <script>
+        document.title = "แดชบอร์ด";
+    </script>
     <?php include('structure/footer.php') ?>

@@ -107,6 +107,8 @@ if ($_SESSION['role'] == 2) {
             });
         }
     </script>
+    <script>
+        document.title = "ความคิดเห็น";
+    </script>
 
-
-<?php include('structure/footer.php') ?>
+    <?php include('structure/footer.php') ?>

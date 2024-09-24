@@ -1,10 +1,11 @@
 .btn-color {
-    background-color: #2A5360;
+    background-color: #001F3F;
     color: #ffff;
 }
 .btn-color:hover {
-    background-color: #182f36;
+    background-color: #001529;
     color: #ffff;
 }
-
-
+.buttonProfile{
+    text-align: end;
+}

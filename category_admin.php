@@ -61,10 +61,10 @@ if ($_SESSION['role'] == 2) {
                                             <td><?php echo $data['category_id'] ?></td>
                                             <td><?php echo $data['category_n'] ?></td>  
                                             <td>
-                                                <a href="updatecategory.php?category_id=<?php echo $data['category_id'] ?>"
+                                                <!-- <a href="updatecategory.php?category_id=<?php echo $data['category_id'] ?>"
                                                     class="btn btn-dark mb-2 mr-2"
                                                     style="margin-right: 5px;"
-                                                    > แก้ไข </a>
+                                                    > แก้ไข </a> -->
                                                 <a onclick="confirm(<?php echo $data['category_id'] ?>)" href="#"
                                                     class="btn btn-danger mb-2 mr-2"
                                                     style="margin-right: 5px;"
@@ -84,9 +84,9 @@ if ($_SESSION['role'] == 2) {
         <div
             class="row justify-content-center align-items-center g-2"
         >
-            <div class="col">
+            <!-- <div class="col">
                 <a href="" class="btn btn-success w-100" style="font-size: 23px;"><b>+</b></a>
-            </div>
+            </div> -->
         </div>
         
     </div>
@@ -111,5 +111,8 @@ if ($_SESSION['role'] == 2) {
                 }
             });
         }
+    </script>
+    <script>
+        document.title = "ประเภท";
     </script>
 <?php include('structure/footer.php') ?>
