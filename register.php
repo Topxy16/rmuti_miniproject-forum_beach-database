@@ -78,5 +78,5 @@ if (isset($_POST['email'])) {
             <div class="col"></div>
         </div>
     </div>
-</body>
+
 <?php include('structure/footer.php') ?>

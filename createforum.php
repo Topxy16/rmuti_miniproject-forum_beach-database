@@ -107,5 +107,5 @@ $result3 = mysqli_query($conn, $sql3);
             <div class="col"></div>
         </div>
     </div>
-</body>
+
 <?php include('structure/footer.php') ?>

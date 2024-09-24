@@ -120,5 +120,5 @@ if (!empty($_POST)) {
         </div>
 
     </div>
-</body>
+
 <?php include('structure/footer.php') ?>

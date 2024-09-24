@@ -39,7 +39,7 @@ WHERE forum.f_id IS NULL;';
 ?>
 
 <body>
-    <div class="container mt-5">
+    <div class="container mt-3">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col">
                 <div class="card card-count">
@@ -86,46 +86,67 @@ WHERE forum.f_id IS NULL;';
                     </div>
                 </div>
             </div>
-        </div>     
+        </div>
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
             <div class="col-12">
-                <div class="table">
-                    <table>
-                        <tr class="head">
-                            <th width="200px">ไอดีผู้ใช้งาน</th>
-                            <th>อีเมล</th>
-                            <th>สถานะ</th>
-                            <th>ชื่อผู้ใช้งาน</th>
-                            <th width="200px">เครื่องมือ</th>
-                            <?php while ($data = mysqli_fetch_assoc($result)) { ?>
-                        <tr>
-                        <tr class="table-row">
-                            <td width="100px"><?php echo $data['user_id'] ?></td>
-                            <td><?php echo $data['email'] ?></td>
-                            <td><?php echo $data['role'] == 2 ? "แอดมิน" : "ผู้ใช้งานทั่วไป"; ?></td>
-                            <td><?php echo $data['user_n'] ?></td>
-                            <td width="140px">
-                                <a href="updateuser_admin.php?user_id=<?php echo $data["user_id"] ?>"
-                                    class="btn btn-dark mb-2 mr-2"
-                                    style="margin-right: 5px;"
-                                    role="button"
-                                    data-bs-toggle="button"> แก้ไข </a>
-                                <a href="removeuser_admin.php?user_id=<?php echo $data["user_id"] ?>"
-                                    class="btn btn-danger mb-2 mr-2"
-                                    style="margin-right: 5px;"
-                                    role="button"
-                                    data-bs-toggle="button"> ลบ </a>
-                            </td>
-                        </tr>
-                        </tr>
-                    <?php } ?>
-                    </tr>
-                    </table>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>ตารางจัดการผู้ใช้งาน</h3>
+                        <div class="table-responsive">
+                            <table id="table" class="table table-hover">
+                                <thead>
+                                    <th width="200px">ไอดีผู้ใช้งาน</th>
+                                    <th>อีเมล</th>
+                                    <th>สถานะ</th>
+                                    <th>ชื่อผู้ใช้งาน</th>
+                                    <th width="200px">เครื่องมือ</th>
+                                </thead>
+                                <tbody>
+                                    <?php while ($data = mysqli_fetch_assoc($result)) { ?>
+                                        <tr>
+                                            <td width="100px"><?php echo $data['user_id'] ?></td>
+                                            <td><?php echo $data['email'] ?></td>
+                                            <td><?php echo $data['role'] == 2 ? "แอดมิน" : "ผู้ใช้งานทั่วไป"; ?></td>
+                                            <td><?php echo $data['user_n'] ?></td>
+                                            <td width="140px">
+                                                <a href="updateuser_admin.php?user_id=<?php echo $data["user_id"] ?>"
+                                                    class="btn btn-dark mb-2 mr-2"
+                                                    style="margin-right: 5px;"> แก้ไข </a>
+                                                <a onclick="confirm(<?php echo $data['user_id'] ?>)" href="#"
+                                                    class="btn btn-danger mb-2 mr-2"> ลบ </a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col"></div>
         </div>
     </div>
-</body>
+    <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirm(id) {
+            console.log(id)
+            Swal.fire({
+                title: "คุณยืนยันที่จะทำรายการหรือไม่",
+                text: "คุณจะไม่สามารถย้อนกลับสิ่งที่ทำได้",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ยืนยัน"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'removeuser_admin.php?user_id=' + id;
+                }
+            });
+        }
+    </script>
+
 <?php include('structure/footer.php') ?>

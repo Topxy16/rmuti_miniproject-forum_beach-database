@@ -72,7 +72,6 @@ if (isset($_POST['ment_detail'])) {
 }
 
 ?>
-
 <body>
     <div class="container">
         <?php
@@ -148,7 +147,7 @@ if (isset($_POST['ment_detail'])) {
     <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function confirm(m_id,f_id) { 
+        function confirm(m_id,f_id) {
             Swal.fire({
                 title: "คุณยืนยันที่จะทำรายการหรือไม่",
                 text: "คุณจะไม่สามารถย้อนกลับสิ่งที่ทำได้",
@@ -160,12 +159,10 @@ if (isset($_POST['ment_detail'])) {
                 confirmButtonText: "ยืนยัน"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'removement.php?ment_id=' + m_id +'&f_id='+ f_id;
-                    
-                    
+                    window.location.href = 'removement.php?ment_id=' + m_id +'&f_id='+ f_id;                   
                 }
             });
         }
     </script>
-</body>
+
 <?php include('structure/footer.php') ?>

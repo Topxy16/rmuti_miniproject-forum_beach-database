@@ -6,9 +6,9 @@ include("structure/navbar.php");
 
 if ($_SESSION['role'] == 2) {
 
-    $sql = 'SELECT * FROM comment';
+    $sql = 'SELECT * FROM category';
     $result = mysqli_query($conn, query: $sql);
-    $count_m = mysqli_num_rows($result);
+    $count_c = mysqli_num_rows($result);
 } else {
     echo "<script>
             Swal.fire({
@@ -20,11 +20,9 @@ if ($_SESSION['role'] == 2) {
             </script>";
     header("Refresh:2; url=index.php");
 }
-
 ?>
 
 <body>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
     <div class="container mt-3">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col">
@@ -32,50 +30,46 @@ if ($_SESSION['role'] == 2) {
                     <div class="card-body">
                         <div class="row justify-content-center align-items-center g-2">
                             <div class="col">
-                                <small style="margin-left: 5px;">จำนวนความคิดเห็น</small>
-                                <h4 style="margin-left: 5px;"><?php echo $count_m ?></h4>
+                                <small style="margin-left: 5px;">จำนวนประเภท</small>                                
+                                <h4 style="margin-left: 5px;"><?php echo $count_c ?></h4>
                             </div>
                             <div class="col">
-                                <p class="bi bi-chat display-5" style="text-align:end"></p>
+                                <p class="bi bi-grid-fill display-5" style="text-align:end"></p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>    
         </div>
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3>ความคิดเห็น</h3>
+                        <h3>ตารางจัดการประเภทฟอรัม</h3>
                         <div class="table-responsive">
-                            <table id="table" class="table">
+                            <table id="table" class="table table-hover">
                                 <thead>
-                                    <th>ไอดีความเห็น</th>
-                                    <th>ไอดีผู้โพสต์ความเห็น</th>
-                                    <th>ไอดีฟอรัม</th>
-                                    <th>ความเห็น</th>
-                                    <th>ถูกแก้ไข</th>
-                                    <th>วันเวลา</th>
+                                    <th>ไอดีประเภท</th>
+                                    <th>ชื่อประเภท</th>
                                     <th>เครื่องมือ</th>
+                                    
                                 </thead>
                                 <tbody>
                                     <?php while ($data = mysqli_fetch_assoc($result)) { ?>
                                         <tr>
-                                            <td><?php echo $data['ment_id'] ?></td>
-                                            <td><?php echo $data['user_id'] ?></td>
-                                            <td><?php echo $data['f_id'] ?></td>
-                                            <td><textarea disabled cols="40"><?php echo $data['ment_detail'] ?></textarea></td>
-                                            <td><?php echo $data['ment_status'] ?></td>
-                                            <td><?php echo $data['ment_datetime'] ?></td>
+                                            <td width=""><?php echo $data['category_id'] ?></td>
+                                            <td><?php echo $data['category_n'] ?></td>  
                                             <td width="140px">
-                                                <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $data['f_id'] ?>"
+                                                <a href="updatecategory.php?category_id=<?php echo $data['category_id'] ?>"
                                                     class="btn btn-dark mb-2 mr-2"
-                                                    style="margin-right: 5px;"> แก้ไข </a>
-                                                <a onclick="confirm(<?php echo $data['ment_id'] ?>)" href="#"
+                                                    style="margin-right: 5px;"
+                                                    > แก้ไข </a>
+                                                <a onclick="confirm(<?php echo $data['category_id'] ?>)" href="#"
                                                     class="btn btn-danger mb-2 mr-2"
-                                                    style="margin-right: 5px;"> ลบ </a>
+                                                    style="margin-right: 5px;"
+                                                    > ลบ </a>
+                                            
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -87,12 +81,21 @@ if ($_SESSION['role'] == 2) {
             </div>
             <div class="col"></div>
         </div>
+        <div
+            class="row justify-content-center align-items-center g-2"
+        >
+            <div class="col">
+                <a href="" class="btn btn-success w-100" style="font-size: 23px;"><b>+</b></a>
+            </div>
+        </div>
+        
     </div>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
+
     <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function confirm(m_id, f_id) {
+        function confirm(id) {
+            console.log(id)
             Swal.fire({
                 title: "คุณยืนยันที่จะทำรายการหรือไม่",
                 text: "คุณจะไม่สามารถย้อนกลับสิ่งที่ทำได้",
@@ -104,11 +107,9 @@ if ($_SESSION['role'] == 2) {
                 confirmButtonText: "ยืนยัน"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'removement.php?ment_id=' + m_id + '&f_id=' + f_id;
+                    window.location.href = 'removecategory.php?category_id=' + id;
                 }
             });
         }
     </script>
-
-
 <?php include('structure/footer.php') ?>

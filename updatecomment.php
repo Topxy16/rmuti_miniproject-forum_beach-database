@@ -140,5 +140,5 @@ if (isset($_POST['ment_detail'])) {
         }
         ?>
     </div>
-</body>
+
 <?php include('structure/footer.php') ?>

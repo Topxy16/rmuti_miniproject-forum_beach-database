@@ -74,8 +74,8 @@ $result1 = mysqli_query($conn, query: $sql1);
                                 </div>
                             </div>
                             <div class="col d-flex justify-content-end align-items-end" style="height: 100%;">
-                                <a href="updateforum.php?f_id=<?php echo $data["f_id"] ?>" class="btn btn-color mb-2 mr-2" style="margin-right: 5px;" role="button" data-bs-toggle="button">แก้ไขฟอรัม</a>
-                                <a href="removeforum.php?f_id=<?php echo $data["f_id"] ?>" class="btn btn-danger mb-2" style="margin-right: 10px;" role="button" data-bs-toggle="button">ลบฟอรัม</a>
+                                <a href="updateforum.php?f_id=<?php echo $data["f_id"] ?>" class="btn btn-color mb-2 mr-2" style="margin-right: 5px;">แก้ไขฟอรัม</a>
+                                <a href="removeforum.php?f_id=<?php echo $data["f_id"] ?>" class="btn btn-danger mb-2" style="margin-right: 10px;">ลบฟอรัม</a>
                             </div>
                         </div>
                     </a>
@@ -85,5 +85,5 @@ $result1 = mysqli_query($conn, query: $sql1);
         }
         ?>
     </div>
-</body>
+
 <?php include('structure/footer.php') ?>

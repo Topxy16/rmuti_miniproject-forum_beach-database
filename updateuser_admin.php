@@ -114,5 +114,5 @@ if ($_SESSION['role'] == 2) {
         </div>
 
     </div>
-</body>
+
 <?php include('structure/footer.php') ?>

@@ -17,7 +17,6 @@ if ($_SESSION['role'] == 2) {
 
     $sql2 = 'SELECT * FROM comment';
     $result2 = mysqli_query($conn, query: $sql2);
-
 } else {
     echo "<script>
             Swal.fire({
@@ -105,48 +104,48 @@ if ($_SESSION['role'] == 2) {
                                 <div class="card-body">
                                     <h4 class="card-title">ความคิดเห็น</h4>
                                     <table class="table table-bordered" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ไอดีฟอรัม</th>
-                                        <th scope="col">ไอดีผู้โพสต์ความเห็น</th>
-                                        <th scope="col">ความเห็น</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $count1 = 0;
-                                    while ($data = mysqli_fetch_assoc($result2)) {
-                                        if ($count1 >= 10) {
-                                            break;  // ถ้าแสดงครบ 10 แถวแล้ว หยุดการวนลูป
-                                        } ?>
-                                        <tr>
-                                            <td><?php echo $data['f_id'] ?></td>
-                                            <td><?php echo $data['user_id'] ?></td>
-                                            <td><?php echo $data['ment_detail'] ?></td>
-                                        </tr>
-                                    <?php
-                                        $count1++;
-                                    } ?>
-                                </tbody>
-                            </table>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ไอดีฟอรัม</th>
+                                                <th scope="col">ไอดีผู้โพสต์ความเห็น</th>
+                                                <th scope="col">ความเห็น</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $count1 = 0;
+                                            while ($data = mysqli_fetch_assoc($result2)) {
+                                                if ($count1 >= 10) {
+                                                    break;  // ถ้าแสดงครบ 10 แถวแล้ว หยุดการวนลูป
+                                                } ?>
+                                                <tr>
+                                                    <td><?php echo $data['f_id'] ?></td>
+                                                    <td><?php echo $data['user_id'] ?></td>
+                                                    <td><?php echo $data['ment_detail'] ?></td>
+                                                </tr>
+                                            <?php
+                                                $count1++;
+                                            } ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div class="mt-2">
-                        <div class="col">
-                            <div class="card border-dark text-center" >
-                                <div class="card-body">
-                                    <h4 class="card-title">ประเภทฟอรัม</h4>
-                                    <i class="bi bi-heart-half icon-custom"></i>
+                    <a href="category_admin.php" style="text-decoration: none; color:#000;">
+                        <div class="mt-2">
+                            <div class="col">
+                                <div class="card border-dark text-center">
+                                    <div class="card-body">
+                                        <h4 class="card-title">ประเภทฟอรัม</h4>
+                                        <i class="bi bi-heart-half icon-custom"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
             </div>
         </div>
     </div>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
-</body>
-<?php include('structure/footer.php') ?>
+    <?php include('structure/footer.php') ?>
