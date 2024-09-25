@@ -1,11 +1,9 @@
 <?php
-
 include("db.connect.php");
 include("structure/header.php");
 include("structure/navbar.php");
 
 if ($_SESSION['role'] == 2) {
-
     $sql = 'SELECT * FROM category';
     $result = mysqli_query($conn, query: $sql);
     $count_c = mysqli_num_rows($result);
@@ -30,7 +28,7 @@ if ($_SESSION['role'] == 2) {
                     <div class="card-body">
                         <div class="row justify-content-center align-items-center g-2">
                             <div class="col">
-                                <small style="margin-left: 5px;">จำนวนประเภท</small>                                
+                                <small style="margin-left: 5px;">จำนวนประเภท</small>
                                 <h4 style="margin-left: 5px;"><?php echo $count_c ?></h4>
                             </div>
                             <div class="col">
@@ -39,7 +37,7 @@ if ($_SESSION['role'] == 2) {
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
@@ -53,23 +51,19 @@ if ($_SESSION['role'] == 2) {
                                     <th width="150px">ไอดีประเภท</th>
                                     <th width="950px">ชื่อประเภท</th>
                                     <th>เครื่องมือ</th>
-                                    
                                 </thead>
                                 <tbody>
                                     <?php while ($data = mysqli_fetch_assoc($result)) { ?>
                                         <tr>
                                             <td><?php echo $data['category_id'] ?></td>
-                                            <td><?php echo $data['category_n'] ?></td>  
+                                            <td><?php echo $data['category_n'] ?></td>
                                             <td>
-                                                <!-- <a href="updatecategory.php?category_id=<?php echo $data['category_id'] ?>"
+                                                <a href="updatecategory.php?category_id=<?php echo $data['category_id'] ?>"
                                                     class="btn btn-dark mb-2 mr-2"
-                                                    style="margin-right: 5px;"
-                                                    > แก้ไข </a> -->
+                                                    style="margin-right: 5px;"> แก้ไข </a>
                                                 <a onclick="confirm(<?php echo $data['category_id'] ?>)" href="#"
                                                     class="btn btn-danger mb-2 mr-2"
-                                                    style="margin-right: 5px;"
-                                                    > ลบ </a>
-                                            
+                                                    style="margin-right: 5px;"> ลบ </a>
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -81,14 +75,11 @@ if ($_SESSION['role'] == 2) {
             </div>
             <div class="col"></div>
         </div>
-        <div
-            class="row justify-content-center align-items-center g-2"
-        >
-            <!-- <div class="col">
-                <a href="" class="btn btn-success w-100" style="font-size: 23px;"><b>+</b></a>
-            </div> -->
+        <div class="row justify-content-center align-items-center g-2">
+            <div class="col">
+                <a href="createcate.php" class="btn btn-success w-100" style="font-size: 24px;"><b>+</b></a>
+            </div>
         </div>
-        
     </div>
 
     <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
@@ -115,4 +106,4 @@ if ($_SESSION['role'] == 2) {
     <script>
         document.title = "ประเภท";
     </script>
-<?php include('structure/footer.php') ?>
+    <?php include('structure/footer.php') ?>

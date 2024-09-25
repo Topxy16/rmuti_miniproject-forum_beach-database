@@ -24,7 +24,6 @@ if ($_SESSION['role'] == 2) {
 ?>
 
 <body>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
     <div class="container mt-3">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col">
@@ -86,7 +85,7 @@ if ($_SESSION['role'] == 2) {
             <div class="col"></div>
         </div>
     </div>
-    <!-- ส่วนคอลั่ม ข้อมูล -->
+
     <script rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

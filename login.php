@@ -1,7 +1,7 @@
 <?php
 include("db.connect.php");
 include("structure/header.php");
-include("structure/navbar.php");
+
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
@@ -35,33 +35,37 @@ if (isset($_POST['email'])) {
 ?>
 
 <body>
-    <div class="contrainer" style="margin-top: 200px;">
-        <div class="row justify-content-center align-items-center g-2">
-            <div class="col"></div>
-            <div class="col-2">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-title">
-                            <h2 class="mb-5 mt-3" style="text-align: center;">ลงชื่อเข้าใช้งาน</h2>
-                        </div>
-                        <form method="post">
-                            <div class="mb-3">
-                 
-                                <input type="email" class="form-control " id="email" name="email" aria-describedby="emailHelp" placeholder="อีเมล" required>
+    
+    <div class="banner"><img src="img/banner.jpg" width="100%"></div>
+    <?php include("structure/navbar.php"); ?>
+
+        <div class="contrainer" style="margin-top: 100px;">
+            <div class="row justify-content-center align-items-center g-2">
+                <div class="col"></div>
+                <div class="col-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h2 class="mb-5 mt-3" style="text-align: center;">ลงชื่อเข้าใช้งาน</h2>
                             </div>
-                            <div class="mb-3">
-                          
-                                <input type="password" class="form-control" id="pass" name="pass" placeholder="รหัสผ่าน" required>
+                            <form method="post">
+                                <div class="mb-3">
+                                    <input type="email" class="form-control " id="email" name="email" aria-describedby="emailHelp" placeholder="อีเมล" required>
+                                </div>
+                                <div class="mb-3">
+
+                                    <input type="password" class="form-control" id="pass" name="pass" placeholder="รหัสผ่าน" required>
+                                </div>
+                                <button type="submit" class="btn btn-color mb-3" style="width: 100%;">เข้าสู่ระบบ</button>
+                            </form>
+                            <div class="regis" style="text-align: center;">
+                                ยังไม่เป็นสมาชิก? <a href="register.php" style="text-decoration: underline;">สมัคสมาชิก</a>
                             </div>
-                            <button type="submit" class="btn btn-color mb-3" style="width: 100%;">เข้าสู่ระบบ</button>
-                        </form>
-                        <div class="regis" style="text-align: center;">
-                        ยังไม่เป็นสมาชิก? <a href="register.php" style="text-decoration: underline;">สมัคสมาชิก</a>
                         </div>
                     </div>
                 </div>
+                <div class="col"></div>
             </div>
-            <div class="col"></div>
         </div>
-    </div>
+
     <?php include('structure/footer.php') ?>

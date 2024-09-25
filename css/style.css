@@ -4,7 +4,6 @@ body {
     font-style: normal;
     background-color: #6A9AB0;
     color: #fff;
-    
 }
 
 .card {
@@ -29,4 +28,16 @@ h4,
 h5,
 h6 {
     color: #fff;
+}
+
+.hero {
+    background-image: url("../img/backgounrd.jpg");
+ 
+    background-size: cover;
+    background-attachment: fixed;
+
+}
+
+.wrap-color{
+    background-color: #274a5f;
 }

@@ -44,7 +44,7 @@ if (isset($_POST['ment_detail'])) {
     $mentdetail = $_POST['ment_detail'];
     $mentdate = date("Y-m-d H:i:s");
 
-    $sql2 = 'INSERT INTO comment (user_id, f_id, ment_detail, ment_status, ment_img, ment_datetime) VALUES (?, ?, ?, "1", NULL, ?)';
+    $sql2 = 'INSERT INTO comment (user_id, f_id, ment_detail, ment_datetime) VALUES (?, ?, ?, ?)';
     $stmt2 = $conn->prepare($sql2);
     if ($stmt2) {
         $stmt2->bind_param('iiss', $userid, $fid, $mentdetail, $mentdate);

@@ -10,32 +10,32 @@
     <ul class="sidebar-nav">
         <hr>
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="index.php" class="sidebar-link">
                 <i class="bi bi-house-fill"></i>
                 <span>หน้าแรก</span>
             </a>
         </li>
         <hr>
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="forum_q.php" class="sidebar-link">
                 <i class="bi bi-question-circle-fill"></i>
                 <span>คำถาม</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="forum_c.php" class="sidebar-link">
                 <i class="bi bi-chat-fill"></i>
                 <span>สนทนา</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="forum_s.php" class="sidebar-link">
                 <i class="bi bi-cart-fill"></i>
                 <span>ขายของ</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="forum_n.php" class="sidebar-link">
                 <i class="bi bi-megaphone-fill"></i>
                 <span>ข่าว</span>
             </a>

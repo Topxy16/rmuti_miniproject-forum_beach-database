@@ -8,31 +8,15 @@ include("structure/navbar.php");
 $sql = 'SELECT `forum`.*, `category`.*, `forum_detail`.*
 FROM `forum` 
 	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
-	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`';
+	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`
+    WHERE category.category_id = 4;';
 $result = mysqli_query($conn,  $sql);
-
-$sql3 = 'SELECT `forum`.*, `category`.*, `forum_detail`.*
-FROM `forum` 
-	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
-	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` ORDER BY forum_detail.fd_datetime DESC';
-$result3 = mysqli_query($conn,  $sql3);
 
 $sql4 = 'SELECT COUNT(*) AS count_m, f_id
 FROM comment
 GROUP BY f_id;';
 $result4 = mysqli_query($conn,  $sql4);
 
-$sql5 = 'SELECT COUNT(*) AS count_m, f_id
-FROM comment
-GROUP BY f_id
-ORDER BY count_m DESC;';
-$result5 = mysqli_query($conn,  $sql5);
-
-$sql6 = 'SELECT `forum`.*, `category`.*, `forum_detail`.*
-FROM `forum` 
-	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
-	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`';
-$result6 = mysqli_query($conn,  $sql6);
 
 if (!empty($_SESSION)) {
     $sql1 = 'SELECT * FROM profile WHERE user_id =' . $_SESSION['user_id'];
@@ -57,89 +41,9 @@ WHERE comment.f_id = 10;';
             <div class="container" style="margin-top: 50px">
                 <div class="row mb-2">
                     <div class="col">
-                        <div class="card mb-2">
-                            <div class="card-header">
-                                <h5>เพิ่มเข้ามาล่าสุด</h5>
-                            </div>
-                            <div class="card-body">
-                                <?php
-                                $count = 0;
-                                while ($data = mysqli_fetch_assoc($result3)) {
-                                    if ($count >= 3) {
-                                        break;
-                                    }
-                                ?>
-                                    <a href="forum.php?f_id=<?php echo $data["f_id"] ?>">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div>
-                                                    <h5><?php echo $data['fd_header'] ?></h5>
-                                                    <div class="badge wrap-color text-wrap mb-3">
-                                                        <?php echo $data['category_n'] ?>
-                                                    </div>
-                                                    <div>
-                                                        <small>สมาชิกหมายเลข <?php echo $data['user_id'] ?> | <?php echo $data['fd_datetime'] ?></small>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </a>
-                                    <hr>
-                                <?php
-                                    $count++;
-                                }
-                                ?>
-                            </div>
-                        </div>
-                        <div class="card mb-2">
-                            <div class="card-header">
-                                <h5>เป็นที่นิยม</h5>
-                            </div>
-                            <div class="card-body">
-                                <?php
-                                $count = 0;
-                                while ($data = mysqli_fetch_assoc($result5)) {
-                                    while ($data2 = mysqli_fetch_assoc($result6)) {
-                                        if ($count >= 3) {
-                                            break;
-                                        }
-                                        if (@$data['f_id'] == @$data2['f_id']) {
-                                ?>
-                                            <a href="forum.php?f_id=<?php echo $data2["f_id"] ?>">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div>
-                                                            <h5><?php echo $data2['fd_header'] ?></h5>
-                                                            <div class="badge wrap-color text-wrap mb-3">
-                                                                <?php echo $data2['category_n'] ?>
-                                                            </div>
-                                                            <div>
-                                                                <small>สมาชิกหมายเลข <?php echo $data2['user_id'] ?> | <?php echo $data2['fd_datetime'] ?></small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col d-flex align-items-end justify-content-end">
-                                                        <div>
-                                                            <?php if (@$data['f_id'] == @$data2['f_id']) { ?>
-                                                                <i class="bi bi-chat"> <?php echo $data['count_m']; ?></i>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <hr>
-                                <?php
-                                            $count++;
-                                        }
-                                    }
-                                }
-                                ?>
-                            </div>
-                        </div>
                         <div class="card">
                             <div class="card-header">
-                                <h5>ทั้งหมด</h5>
+                                <h5>คำถาม</h5>
                             </div>
                             <div class="card-body">
                                 <?php

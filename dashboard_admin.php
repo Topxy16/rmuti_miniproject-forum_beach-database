@@ -4,7 +4,6 @@ include("db.connect.php");
 include("structure/header.php");
 include("structure/navbar.php");
 
-
 if ($_SESSION['role'] == 2) {
     $sql = 'SELECT `forum`.*, `forum_detail`.*,category.* 
     FROM `forum`, `forum_detail`,category 
