@@ -80,7 +80,7 @@ if (isset($_POST['ment_detail'])) {
     <div class="container">
         <?php
         while ($data = mysqli_fetch_assoc($result)) {
-        ?>
+            ?>
             <div class="row mt-2 justify-content-center align-items-center g-2">
                 <div class="col"></div>
                 <div class="col-10">
@@ -92,14 +92,18 @@ if (isset($_POST['ment_detail'])) {
                             <div class="col">
                                 <div class="card-body">
                                     <h5 class="card-title"><b><?php echo $data['fd_header'] ?></b></h5>
-                                    <span class="card-text"><small class="text-body-secondary"><?php echo $data['category_n'] ?></small></span>
+                                    <span class="card-text"><small
+                                            class="text-body-secondary"><?php echo $data['category_n'] ?></small></span>
                                     <p class="card-text"><?php echo $data['fd_content'] ?></p>
-                                    <img src="<?php echo $data['fpic_image']?>" alt="" style="max-width: 100%; height: 400px; ">
+                                    <img src="<?php echo $data['fpic_image'] ?>" alt=""
+                                        style="max-width: 100%; height: 400px; ">
                                     <div class="underline"></div>
                                     <div class="align-items-center">
                                         <div class="vr"></div>
-                                        <span class="card-text"><small class="text-body-secondary"><?php echo $data['fd_datetime'] ?></small></span>
-                                        <span class="card-text"><small class="text-body-secondary">ผู้โพสต์ <?php echo $data['user_n'] ?></small></span>
+                                        <span class="card-text"><small
+                                                class="text-body-secondary"><?php echo $data['fd_datetime'] ?></small></span>
+                                        <span class="card-text"><small class="text-body-secondary">ผู้โพสต์
+                                                <?php echo $data['user_n'] ?></small></span>
                                     </div>
                                 </div>
                             </div>
@@ -119,10 +123,12 @@ if (isset($_POST['ment_detail'])) {
                             <div class="card border-dark">
                                 <div class="card-body">
                                     <p class="card-text"><?php echo $data['ment_detail'] ?></p>
-                                    <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> | ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>
+                                    <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> |
+                                        ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>
                                     <?php if (@$_SESSION['user_id'] == @$data['user_id']) { ?>
                                         <div style="text-align: right">
-                                            <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>" style="text-decoration: none; color:black;"><i class="bi bi-pencil"></i></a>
+                                            <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>"
+                                                style="text-decoration: none; color:black;"><i class="bi bi-pencil"></i></a>
                                             <a onclick="confirm(<?php echo $data['ment_id'] ?>,<?php echo $data['f_id'] ?>)" href="#"
                                                 style="text-decoration: none; color:black;">
                                                 <i class="bi bi-trash"></i>
@@ -136,22 +142,24 @@ if (isset($_POST['ment_detail'])) {
                     </div>
                 <?php } ?>
             <?php } ?>
-            <div class="row justify-content-center align-items-center g-2 mt-3">
-                <div class="col"></div>
-                <div class="col-10">
-                    <div class="card border-dark">
-                        <div class="card-body">
-                            <form method="post">
-                                <textarea name="ment_detail" id="ment_detail" cols="100" rows="5"></textarea>
-                                <button type="submit" class="btn btn-success" style="width: 25%;">เพิ่มความเห็น</button>
-                                <small>สมาชิกหมายเลข : <?php echo $_SESSION['user_id'] ?></small>
-                            </form>
+            <?php if (!empty($_SESSION['user_id'])) { ?>
+                <div class="row justify-content-center align-items-center g-2 mt-3">
+                    <div class="col"></div>
+                    <div class="col-10">
+                        <div class="card border-dark">
+                            <div class="card-body">
+                                <form method="post">
+                                    <textarea name="ment_detail" id="ment_detail" cols="100" rows="5"></textarea>
+                                    <button type="submit" class="btn btn-success" style="width: 25%;">เพิ่มความเห็น</button>
+                                    <small>สมาชิกหมายเลข : <?php echo $_SESSION['user_id'] ?></small>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    <div class="col"></div>
                 </div>
-                <div class="col"></div>
-            </div>
-        <?php
+            <?php } ?>
+            <?php
         }
         ?>
     </div>
@@ -174,7 +182,7 @@ if (isset($_POST['ment_detail'])) {
             });
         }
     </script>
-        <script>
-            document.title = "ฟอรัม";
-        </script>
+    <script>
+        document.title = "ฟอรัม";
+    </script>
     <?php include('structure/footer.php') ?>

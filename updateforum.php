@@ -37,9 +37,9 @@ if (!empty($_POST)) {
 
             if ($result2) {
                 if ($result3) {
-                    if($_SESSION['role']=='2'){
+                    if ($_SESSION['role'] == '2') {
                         header('location:forum_admin.php');
-                    }else{
+                    } else {
                         header('location:profile.php');
                     }
                 } else {
@@ -78,49 +78,59 @@ if (!empty($_POST)) {
 }
 
 ?>
+
 <body>
     <div class="container mt-5">
-        <div class="row mt-2 justify-content-center align-items-center g-2">
-        <?php
+        <div class="row g-2">
+            <?php
             while ($data = mysqli_fetch_assoc($result)) {
-            ?>
-            <div class="col"></div>
-                <div class="col-11">
-                <h2>แก้ไขฟอรัม <?php echo $data['fd_header'] ?> </h2>
-                    <form method="post">
-                        <div class="mb-3">
-                            <label for="" class="form-label">หัวข้อ</label>
-                            <input type="text" class="form-control " id="fd_header" name="fd_header" placeholder="กรอก หัวข้อ" value="<?php echo $data['fd_header'] ?>" required>
+                ?>
+                <div class="col"></div>
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>แก้ไขฟอรัม <?php echo $data['fd_header'] ?> </h4>
                         </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">รายละเอียด</label>
-                            <textarea class="form-control" id="fd_content" name="fd_content" rows="17" required><?php echo $data['fd_content'] ?></textarea>
-                        </div>
-                        <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>
-                        <select class="form-select mb-3" aria-label="Default select example" name="category_id">                    
-                            <?php
-                            while ($data = mysqli_fetch_assoc($result1)) {
-                            ?>
-                                <option value="<?php echo $data['category_id'] ?>"><?php echo $data['category_n'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
-                        <!-- <div class="mb-3">
+                        <div class="card-body">
+                            <form method="post">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">หัวข้อ</label>
+                                    <input type="text" class="form-control " id="fd_header" name="fd_header"
+                                        placeholder="กรอก หัวข้อ" value="<?php echo $data['fd_header'] ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">รายละเอียด</label>
+                                    <textarea class="form-control" id="fd_content" name="fd_content" rows="8"
+                                        required><?php echo $data['fd_content'] ?></textarea>
+                                </div>
+                                <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>
+                                <select class="form-select mb-3" aria-label="Default select example" name="category_id">
+                                    <?php
+                                    while ($data = mysqli_fetch_assoc($result1)) {
+                                        ?>
+                                        <option value="<?php echo $data['category_id'] ?>"><?php echo $data['category_n'] ?>
+                                        </option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                                <!-- <div class="mb-3">
                                 <label for="formFile" class="form-label">รูป</label>
                                 <input class="form-control" type="file" id="formFile">
                             </div> -->
-                        <button type="submit" class="btn btn-color" style="width: 100%;">ยืนยัน</button>
-                    </form>
+                                <button type="submit" class="btn btn-color" style="width: 100%;">ยืนยัน</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <?php
             }
-    ?>
-                <div class="col"></div>
+            ?>
+            <div class="col"></div>
         </div>
 
     </div>
     <script>
-            document.title = "แก้ไขฟอรัม";
-        </script>
-<?php include('structure/footer.php') ?>
+        document.title = "แก้ไขฟอรัม";
+    </script>
+    <?php include('structure/footer.php') ?>

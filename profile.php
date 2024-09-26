@@ -20,16 +20,18 @@ $result1 = mysqli_query($conn, query: $sql1);
     <div class="container">
         <?php
         while ($data = mysqli_fetch_assoc($result1)) {
-        ?>
+            ?>
             <div class="row mt-2 justify-content-center align-items-center g-2">
                 <div class="col-12">
                     <div class="card mb-3">
-                    <div class="card-header">
-                        สมาชิกหมายเลข <?php echo $data['user_id']?>
-                    </div>
+                        <div class="card-header">
+                            สมาชิกหมายเลข <?php echo $data['user_id'] ?>
+                        </div>
                         <div class="row g-0">
                             <div class="col-1 d-flex">
-                                <a href="imageprofile.php"><img src="<?php echo $data['image'] ?>" alt="Avatar" class="avatar"></a>
+                                <a href="imageprofile.php"><img
+                                        src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>"
+                                        alt="Avatar" class="avatar"></a>
                             </div>
                             <div class="col">
                                 <div class="card-body mb-3">
@@ -38,7 +40,8 @@ $result1 = mysqli_query($conn, query: $sql1);
                                 </div>
                             </div>
                             <div class="col d-flex align-items-end flex-column">
-                                <a href="updateprofile.php?user_id=<?php echo $data['user_id'] ?>" class="btn btn-color w-10 mt-auto mb-2 mr-2"
+                                <a href="updateprofile.php?user_id=<?php echo $data['user_id'] ?>"
+                                    class="btn btn-color w-10 mt-auto mb-2 mr-2"
                                     style="margin-right: 10px;">แก้ไขข้อมูลส่วนตัว</a>
                             </div>
                         </div>
@@ -46,12 +49,11 @@ $result1 = mysqli_query($conn, query: $sql1);
                 </div>
 
             </div>
-        <?php
+            <?php
         }
         ?>
 
-        <div
-            class="row justify-content-center align-items-center g-2">
+        <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
             <div class="col-12">
                 <div class="card">
@@ -61,7 +63,7 @@ $result1 = mysqli_query($conn, query: $sql1);
                     <div class="card-body">
                         <?php
                         while ($data = mysqli_fetch_assoc($result)) {
-                        ?>
+                            ?>
                             <a href="forum.php?f_id=<?php echo $data["f_id"] ?>">
                                 <div class="row">
                                     <div class="col">
@@ -69,20 +71,23 @@ $result1 = mysqli_query($conn, query: $sql1);
                                             <h5 class="card-title"><?php echo $data['fd_header'] ?></h5>
                                             <p class="card-text"><?php echo $data['fd_content'] ?></p>
                                             <div class="align-items-center">
-                                                <span class="card-text"><small
-                                                        class="">โพสต์เมื่อ : <?php echo $data['fd_datetime'] ?> <?php echo $data['category_n'] ?></small></span>
+                                                <span class="card-text"><small class="">โพสต์เมื่อ :
+                                                        <?php echo $data['fd_datetime'] ?>
+                                                        <?php echo $data['category_n'] ?></small></span>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                </div>
-                                <div class="buttonProfile">
-                                    <a href="updateforum.php?f_id=<?php echo $data["f_id"] ?>" class="mb-2 mr-2" style="margin-right: 5px;"><i class="bi bi-pencil"></i></a>
-                                    <a onclick="confirm(<?php echo $data['f_id'] ?>)" href="#" class="mb-2" style="margin-right: 10px;"><i class="bi bi-trash"></i></a>
+                                    <div class="col d-flex align-items-end justify-content-end">
+                                        <a href="updateforum.php?f_id=<?php echo $data["f_id"] ?>" class="mb-2 mr-2"
+                                            style="margin-right: 5px;"><i class="bi bi-pencil"></i></a>
+                                        <a onclick="confirm(<?php echo $data['f_id'] ?>)" href="#" class="mb-2"
+                                            style="margin-right: 10px;"><i class="bi bi-trash"></i></a>
+                                    </div>
+
                                 </div>
                             </a>
                             <hr>
-                        <?php
+                            <?php
                         }
                         ?>
                     </div>

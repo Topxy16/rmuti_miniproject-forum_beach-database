@@ -9,40 +9,40 @@ $sql = 'SELECT `forum`.*, `category`.*, `forum_detail`.*
 FROM `forum` 
 	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
 	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`';
-$result = mysqli_query($conn,  $sql);
+$result = mysqli_query($conn, $sql);
 
 $sql3 = 'SELECT `forum`.*, `category`.*, `forum_detail`.*
 FROM `forum` 
 	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
 	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` ORDER BY forum_detail.fd_datetime DESC';
-$result3 = mysqli_query($conn,  $sql3);
+$result3 = mysqli_query($conn, $sql3);
 
 $sql4 = 'SELECT COUNT(*) AS count_m, f_id
 FROM comment
 GROUP BY f_id;';
-$result4 = mysqli_query($conn,  $sql4);
+$result4 = mysqli_query($conn, $sql4);
 
 $sql5 = 'SELECT COUNT(*) AS count_m, f_id
 FROM comment
 GROUP BY f_id
 ORDER BY count_m DESC;';
-$result5 = mysqli_query($conn,  $sql5);
+$result5 = mysqli_query($conn, $sql5);
 
 $sql6 = 'SELECT `forum`.*, `category`.*, `forum_detail`.*
 FROM `forum` 
 	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
 	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`';
-$result6 = mysqli_query($conn,  $sql6);
+$result6 = mysqli_query($conn, $sql6);
 
-if (!empty($_SESSION)) {
+if (!empty(@$_SESSION['user_id'])) {
     $sql1 = 'SELECT * FROM profile WHERE user_id =' . $_SESSION['user_id'];
-    $result1 = mysqli_query($conn,  $sql1);
+    $result1 = mysqli_query($conn, $sql1);
 
     $sql2 = 'SELECT `forum`.*, `comment`.*
 FROM `forum` 
 LEFT JOIN `comment` ON `comment`.`f_id` = `forum`.`f_id`
 WHERE comment.f_id = 10;';
-    $result2 = mysqli_query($conn,  $sql2);
+    $result2 = mysqli_query($conn, $sql2);
     $countment = mysqli_num_rows($result2);
 }
 
@@ -68,7 +68,7 @@ WHERE comment.f_id = 10;';
                                     if ($count >= 3) {
                                         break;
                                     }
-                                ?>
+                                    ?>
                                     <a href="forum.php?f_id=<?php echo $data["f_id"] ?>">
                                         <div class="row">
                                             <div class="col">
@@ -78,7 +78,8 @@ WHERE comment.f_id = 10;';
                                                         <?php echo $data['category_n'] ?>
                                                     </div>
                                                     <div>
-                                                        <small>สมาชิกหมายเลข <?php echo $data['user_id'] ?> | <?php echo $data['fd_datetime'] ?></small>
+                                                        <small>สมาชิกหมายเลข <?php echo $data['user_id'] ?> |
+                                                            <?php echo $data['fd_datetime'] ?></small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,7 +87,7 @@ WHERE comment.f_id = 10;';
                                         </div>
                                     </a>
                                     <hr>
-                                <?php
+                                    <?php
                                     $count++;
                                 }
                                 ?>
@@ -105,7 +106,7 @@ WHERE comment.f_id = 10;';
                                             break;
                                         }
                                         if (@$data['f_id'] == @$data2['f_id']) {
-                                ?>
+                                            ?>
                                             <a href="forum.php?f_id=<?php echo $data2["f_id"] ?>">
                                                 <div class="row">
                                                     <div class="col">
@@ -115,7 +116,8 @@ WHERE comment.f_id = 10;';
                                                                 <?php echo $data2['category_n'] ?>
                                                             </div>
                                                             <div>
-                                                                <small>สมาชิกหมายเลข <?php echo $data2['user_id'] ?> | <?php echo $data2['fd_datetime'] ?></small>
+                                                                <small>สมาชิกหมายเลข <?php echo $data2['user_id'] ?> |
+                                                                    <?php echo $data2['fd_datetime'] ?></small>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -129,7 +131,7 @@ WHERE comment.f_id = 10;';
                                                 </div>
                                             </a>
                                             <hr>
-                                <?php
+                                            <?php
                                             $count++;
                                         }
                                     }
@@ -144,7 +146,7 @@ WHERE comment.f_id = 10;';
                             <div class="card-body">
                                 <?php
                                 while ($data = mysqli_fetch_assoc($result)) {
-                                ?>
+                                    ?>
                                     <a href="forum.php?f_id=<?php echo $data["f_id"] ?>">
                                         <div class="row">
                                             <div class="col">
@@ -154,7 +156,8 @@ WHERE comment.f_id = 10;';
                                                         <?php echo $data['category_n'] ?>
                                                     </div>
                                                     <div>
-                                                        <small>สมาชิกหมายเลข <?php echo $data['user_id'] ?> | <?php echo $data['fd_datetime'] ?></small>
+                                                        <small>สมาชิกหมายเลข <?php echo $data['user_id'] ?> |
+                                                            <?php echo $data['fd_datetime'] ?></small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -170,7 +173,7 @@ WHERE comment.f_id = 10;';
                                         </div>
                                     </a>
                                     <hr>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -178,16 +181,17 @@ WHERE comment.f_id = 10;';
                     </div>
                     <div class="col-3">
                         <?php
-                        if (!empty($_SESSION)) {
+                        if (!empty(@$_SESSION['user_id'])) {
                             while ($data = mysqli_fetch_assoc($result1)) {
-                        ?>
+                                ?>
                                 <div class="card testimonial-card">
                                     <div class="card-header">
                                         <h5>สมาชิกหมายเลข : <?php echo $_SESSION['user_id'] ?></h5>
                                     </div>
                                     <div class="card-up" style="background-color: #6d5b98;"></div>
                                     <div class="avatar mx-auto ">
-                                        <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>" class="rounded-circle img-fluid" />
+                                        <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>"
+                                            class="rounded-circle img-fluid" />
                                     </div>
                                     <div class="card-body text-center">
                                         <h4 class="mb-4"><?php echo $data['user_n'] ?></h4>
@@ -197,7 +201,7 @@ WHERE comment.f_id = 10;';
                                         </p>
                                     </div>
                                 </div>
-                        <?php }
+                            <?php }
                         } ?>
                         <div class="card testimonial-card mt-2">
                             <div class="card-header text-center">

@@ -10,9 +10,8 @@ if (!empty($_SESSION['user_id'])) {
         $category_id = $_POST['category_id'];
         $fd_header = $_POST['fd_header'];
         $fd_content = $_POST['fd_content'];
-        $fd_datetime = date("Y-m-d H:i:s");  // ใช้เพื่อกำหนดเวลาปัจจุบัน
+        $fd_datetime = date("Y-m-d H:i:s");
 
-        // Insert ข้อมูลเข้าสู่ตาราง forum โดยใช้ prepared statement
         $sql1 = "INSERT INTO forum (user_id, category_id) VALUES (?, ?)";
         $stmt1 = mysqli_prepare($conn, $sql1);
 
@@ -21,10 +20,8 @@ if (!empty($_SESSION['user_id'])) {
             $result1 = mysqli_stmt_execute($stmt1);
 
             if ($result1) {
-                // ดึง f_id ที่เพิ่งถูกสร้างจากตาราง forum
                 $f_id = mysqli_insert_id($conn);
-
-                // Insert ข้อมูลเข้าสู่ตาราง forum_detail โดยใช้ f_id ที่เพิ่งได้มา
+                
                 $sql2 = "INSERT INTO forum_detail (fd_header, fd_content, fd_datetime, f_id) VALUES (?, ?, ?, ?)";
                 $stmt2 = mysqli_prepare($conn, $sql2);
 
@@ -45,17 +42,24 @@ if (!empty($_SESSION['user_id'])) {
                                         $stmt3->bind_param("sii", $target_file, $user_id, $f_id);
                                         $result3 = mysqli_stmt_execute($stmt3);
                                         if ($result3) {
+                                            // แสดงการแจ้งเตือนด้วย SweetAlert2
+                                            echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                                             echo "<script>
                                                     Swal.fire({
                                                     position: 'center',
                                                     icon: 'success',
                                                     title: 'ทำรายการสำเร็จ',
                                                     showConfirmButton: false,
-                                                    timer: 2000 })
-                                                    </script>";
-                                            header("Refresh:2; url=index.php");
+                                                    timer: 2000
+                                                    }).then(function() {
+                                                        window.location.href = 'index.php';
+                                                    });
+                                                  </script>";
+                                            ob_end_flush(); // ปิดการบัฟเฟอร์และส่งขาออก
+                                            exit;
                                         }
                                     } else {
+                                        echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                                         echo "<script>
                                         Swal.fire({
                                         position: 'center',
@@ -85,6 +89,22 @@ if (!empty($_SESSION['user_id'])) {
                                 timer: 2000 })
                                 </script>";
                             }
+                        } else {
+                            // แสดงข้อความสำเร็จถ้าไม่มีการอัปโหลดไฟล์
+                            echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+                            echo "<script>
+                                    Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'ทำรายการสำเร็จ',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                    }).then(function() {
+                                        window.location.href = 'index.php';
+                                    });
+                                  </script>";
+                            ob_end_flush(); // ปิดการบัฟเฟอร์และส่งขาออก
+                            exit;
                         }
                     } else {
                         echo "เกิดข้อผิดพลาดในการเพิ่มข้อมูลใน forum_detail: " . mysqli_error($conn);
@@ -104,17 +124,19 @@ if (!empty($_SESSION['user_id'])) {
         }
     }
 } else {
+    echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
     echo "<script>
             Swal.fire({
             position: 'center',
             icon: 'error',
             title: 'กรุณาล็อกอิน',
             showConfirmButton: false,
-            timer: 2000 })
-            </script>";
-    header("Refresh:2; url=login.php");
+            timer: 2000
+            }).then(function() {
+                window.location.href = 'login.php';
+            });
+          </script>";
 }
-
 // ดึงข้อมูลหมวดหมู่
 $sql3 = "SELECT * FROM category";
 $result3 = mysqli_query($conn, $sql3);
@@ -123,46 +145,57 @@ $result3 = mysqli_query($conn, $sql3);
 
 <body>
     <div class="container mt-5">
-        <div class="row justify-content-center align-items-center g-2">
-            <div class="col"></div>
-            <div class="col-12">
+        <div class="row g-2">
+            <div class="col-8">
                 <div class="card">
-                <div class="card-header">
-                        <h2>โพสต์ฟอรัม</h2>
+                    <div class="card-header">
+                        <h4>โพสต์ฟอรัม</h4>
                     </div>
                     <div class="card-body">
-                     
                         <form method="post" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="" class="form-label">หัวข้อ</label>
-                                <input type="text" class="form-control " id="fd_header" name="fd_header" placeholder="กรอก หัวข้อ" required>
+                                <input type="text" class="form-control " id="fd_header" name="fd_header"
+                                    placeholder="กรอก หัวข้อ" required>
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">รายละเอียด</label>
-                                <textarea class="form-control" id="fd_content" name="fd_content" rows="8" required></textarea>
+                                <textarea class="form-control" id="fd_content" name="fd_content" rows="8"
+                                    required></textarea>
                             </div>
                             <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>
-                            <select class="form-select mb-3" aria-label="Default select example" name="category_id" required>
+                            <select class="form-select mb-3" aria-label="Default select example" name="category_id"
+                                required>
                                 <?php
                                 while ($data = mysqli_fetch_assoc($result3)) {
-                                ?>
-                                    <option value="<?php echo $data['category_id'] ?>"><?php echo $data['category_n'] ?></option>
-                                <?php
+                                    ?>
+                                    <option value="<?php echo $data['category_id'] ?>">
+                                        <?php echo $data['category_n'] ?>
+                                    </option>
+                                    <?php
                                 }
                                 ?>
                             </select>
-
-                            <div class="mb-3">
-                                <img id="previewImage" class="card-img-top" src="img/pre.jpg" style="max-width: 15%; height: auto;">
-                                <input class="form-control mt-2" type="file" id="dspPic" name="dspPic" accept="image/*">
-                            </div>
                             <button type="submit" class="btn btn-color" style="width: 100%;">ยืนยัน</button>
+
                     </div>
                 </div>
-              
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>รูป</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <img id="previewImage" class="card-img-top" src="img/pre.jpg"
+                                style="max-width: 100%; height: auto;">
+                            <input class="form-control mt-2" type="file" id="dspPic" name="dspPic" accept="image/*">
+                        </div>
+                    </div>
+                </div>
                 </form>
             </div>
-            <div class="col"></div>
         </div>
     </div>
     <script>
@@ -174,11 +207,11 @@ $result3 = mysqli_query($conn, $sql3);
         const defaultImage = "https://via.placeholder.com/150"; // Default image URL
 
         // Adding an event listener for file input changes
-        dspPicInput.addEventListener('change', function(event) {
+        dspPicInput.addEventListener('change', function (event) {
             const file = event.target.files[0]; // Get the file from input
             if (file) {
                 const reader = new FileReader(); // Create a FileReader object
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     previewImage.src = e.target.result; // Set the image source to the loaded file
                 }
                 reader.readAsDataURL(file); // Read the file as a DataURL (base64)
@@ -189,7 +222,7 @@ $result3 = mysqli_query($conn, $sql3);
         });
 
         // Reset the image preview to default if the form is reset
-        document.querySelector('form').addEventListener('reset', function() {
+        document.querySelector('form').addEventListener('reset', function () {
             previewImage.src = defaultImage; // Reset to default image when form is reset
         });
     </script>

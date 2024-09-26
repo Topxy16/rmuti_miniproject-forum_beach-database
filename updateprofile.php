@@ -80,8 +80,8 @@ if (!empty($_POST)) {
                 <div class="col"></div>
                 <div class="col-3">
                     <div class="card">
-                        <div class="card-header" style="text-align:center;">
-                            <h2>แก้ไขข้อมูลผู้ใช้งาน</h2>
+                        <div class="card-header">
+                            <h4>แก้ไขข้อมูลผู้ใช้งาน</h4>
                         </div>
                         <div class="card-body mt-3">
                             <form method="post">

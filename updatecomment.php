@@ -112,7 +112,6 @@ if (isset($_POST['ment_detail'])) {
                             <div class="card-body">
                                 <?php if (@$_GET['ment_id'] == @$data['ment_id']) { ?>
                                     <form method="post">
-
                                         <div class="mb-3">                            
                                            <textarea name="ment_detail" id="ment_detail" cols="100" rows="5"> <?php echo $data['ment_detail']?></textarea>                                    
                                         </div>

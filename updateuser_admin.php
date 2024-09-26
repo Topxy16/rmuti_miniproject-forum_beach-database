@@ -87,30 +87,36 @@ if ($_SESSION['role'] == 2) {
         <div class="row mt-2 justify-content-center align-items-center g-2">
             <?php
             while ($data = mysqli_fetch_assoc($result)) {
-            ?>
+                ?>
                 <div class="col"></div>
                 <div class="col">
                     <div class="card">
+                        <div class="card-header">
+                            <h4>แก้ไขข้อมูลผู้ใช้งาน <?php echo $data['user_n'] ?> </h4>
+                        </div>
                         <div class="card-body">
-                            <h2>แก้ไขข้อมูลผู้ใช้งาน <?php echo $data['user_n'] ?> </h2>
+
                             <form method="post">
                                 <div class="mb-3">
                                     <label for="" class="form-label">อีเมลผู้ใช้งาน</label>
-                                    <input type="email" class="form-control " id="email" name="email" value="<?php echo $data['email'] ?>" required>
+                                    <input type="email" class="form-control " id="email" name="email"
+                                        value="<?php echo $data['email'] ?>" required>
                                     <label for="" class="form-label">รหัสผู้ใช้งาน</label>
-                                    <input type="text" class="form-control " id="pass" name="pass" value="<?php echo $data['pass'] ?>" required>
+                                    <input type="text" class="form-control " id="pass" name="pass"
+                                        value="<?php echo $data['pass'] ?>" required>
                                     <label for="" class="form-label">ชื่อผู้ใช้งาน</label>
-                                    <input type="text" class="form-control " id="user_n" name="user_n" value="<?php echo $data['user_n'] ?>" required>
+                                    <input type="text" class="form-control " id="user_n" name="user_n"
+                                        value="<?php echo $data['user_n'] ?>" required>
                                 </div>
-                            <?php
-                        }
-                            ?>
+                                <?php
+            }
+            ?>
                             <button type="submit" class="btn btn-color" style="width: 100%;">ยืนยัน</button>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <div class="col"></div>
+            </div>
+            <div class="col"></div>
         </div>
 
     </div>

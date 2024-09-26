@@ -10,7 +10,6 @@ if ($_SESSION['role'] == 2) {
     WHERE forum.f_id = forum_detail.f_id
     AND forum.category_id = category.category_id';
     $result = mysqli_query($conn, query: $sql);
-
     $sql1 = 'SELECT `user`.*, `profile`.* FROM `user`, `profile`WHERE user.user_id = profile.user_id;';
     $result1 = mysqli_query($conn, query: $sql1);
 
@@ -31,7 +30,7 @@ if ($_SESSION['role'] == 2) {
 
 <body>
     <!-- ส่วนคอลั่ม ข้อมูล -->
-    <div class="container mt-3">
+    <div class="container mt-3 mb-3">
         <div class="row justify-content-center align-items-center">
             <div class="col">
                 <a href="user_admin.php" style="text-decoration: none; color:#000;">
@@ -76,7 +75,7 @@ if ($_SESSION['role'] == 2) {
                                 <tbody>
                                     <?php $count1 = 0;
                                     while ($data = mysqli_fetch_assoc($result)) {
-                                        if ($count1 >= 10) {
+                                        if ($count1 >= 14) {
                                             break;  // ถ้าแสดงครบ 10 แถวแล้ว หยุดการวนลูป
                                         } ?>
                                         <tr>
