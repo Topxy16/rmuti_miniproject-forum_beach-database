@@ -80,7 +80,7 @@ if ($_SESSION['role'] == 2) {
                                         } ?>
                                         <tr>
                                             <td><?php echo $data['user_id'] ?></td>
-                                            <td><?php echo $data['fd_header'] ?></td>
+                                            <td width="300px"><?php echo $data['fd_header'] ?></td>
                                             <td><?php echo $data['category_n'] ?></td>
                                         </tr>
                                     <?php

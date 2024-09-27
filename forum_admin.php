@@ -56,21 +56,23 @@ if ($_SESSION['role'] == 2) {
                             <table id="table" class="table table-hover">
                                 <thead>
                                     <th>ไอดีผู้โพสต์</th>
-                                    <th>ไอดีฟอรัม</th>
-                                    <th>หัวข้อฟอรัม</th>
+
+                                    <th width="200px">หัวข้อฟอรัม</th>
                                     <th>เนื้อหาฟอรัม</th>
                                     <th>ประเภทฟอรัม</th>
+                                    <th>โพสต์เมื่อ</th>
                                     <th>เครื่องมือ</th>
                                 </thead>
                                 <tbody>
                                     <?php while ($data = mysqli_fetch_assoc($result)) { ?>
                                         <tr>
                                             <td><?php echo $data['user_id'] ?></td>
-                                            <td><?php echo $data['f_id'] ?></td>
+
                                             <td><?php echo $data['fd_header'] ?></td>
                                             <td><textarea disabled cols="40"><?php echo $data['fd_content'] ?></textarea></td>
                                             <td><?php echo $data['category_n'] ?></td>
-                                            <td width="140px">
+                                            <td><?php echo $data['fd_datetime'] ?></td>
+                                            <td>
                                                 <a href="updateforum.php?f_id=<?php echo $data['f_id'] ?>"
                                                     class="btn btn-dark mb-2 mr-2"
                                                     style="margin-right: 5px;"> แก้ไข </a>

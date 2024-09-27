@@ -28,8 +28,12 @@ ob_start();
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script defer src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
     <script defer src="https://cdn.datatables.net/2.1.6/js/dataTables.bootstrap5.js"></script>
-    <script defer src="js/script.js"></script>
+
+   
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script defer src="js/script.js"></script>
+    <script src="https://cdn.tiny.cloud/1/agtrvl3is8bnift82baj1d7kdnzpbscz5y1s69m6yt0uokd6/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
 
     <link href="css/navbar.css" rel="stylesheet">

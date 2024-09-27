@@ -42,7 +42,7 @@ if (!empty($_SESSION['user_id'])) {
                                         $stmt3->bind_param("sii", $target_file, $user_id, $f_id);
                                         $result3 = mysqli_stmt_execute($stmt3);
                                         if ($result3) {
-                                            // แสดงการแจ้งเตือนด้วย SweetAlert2
+                              
                                             echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                                             echo "<script>
                                                     Swal.fire({
@@ -55,7 +55,7 @@ if (!empty($_SESSION['user_id'])) {
                                                         window.location.href = 'index.php';
                                                     });
                                                   </script>";
-                                            ob_end_flush(); // ปิดการบัฟเฟอร์และส่งขาออก
+                                            ob_end_flush();
                                             exit;
                                         }
                                     } else {
@@ -90,7 +90,7 @@ if (!empty($_SESSION['user_id'])) {
                                 </script>";
                             }
                         } else {
-                            // แสดงข้อความสำเร็จถ้าไม่มีการอัปโหลดไฟล์
+
                             echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                             echo "<script>
                                     Swal.fire({
@@ -103,7 +103,7 @@ if (!empty($_SESSION['user_id'])) {
                                         window.location.href = 'index.php';
                                     });
                                   </script>";
-                            ob_end_flush(); // ปิดการบัฟเฟอร์และส่งขาออก
+                            ob_end_flush();
                             exit;
                         }
                     } else {
@@ -137,7 +137,7 @@ if (!empty($_SESSION['user_id'])) {
             });
           </script>";
 }
-// ดึงข้อมูลหมวดหมู่
+
 $sql3 = "SELECT * FROM category";
 $result3 = mysqli_query($conn, $sql3);
 
@@ -160,8 +160,8 @@ $result3 = mysqli_query($conn, $sql3);
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">รายละเอียด</label>
-                                <textarea class="form-control" id="fd_content" name="fd_content" rows="8"
-                                    required></textarea>
+                                <textarea class="form-control" id="mytextarea" name="fd_content"
+                                    ></textarea>
                             </div>
                             <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>
                             <select class="form-select mb-3" aria-label="Default select example" name="category_id"
@@ -184,7 +184,7 @@ $result3 = mysqli_query($conn, $sql3);
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h4>รูป</h4>
+                        <h4>รูป JPG/PNG</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-4">

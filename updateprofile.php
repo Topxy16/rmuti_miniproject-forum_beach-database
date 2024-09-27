@@ -4,60 +4,51 @@ include("db.connect.php");
 include("structure/header.php");
 include("structure/navbar.php");
 
-
 $sql = 'SELECT `user`.*, `profile`.* FROM `user`, `profile` WHERE user.user_id = profile.user_id AND user.user_id = ' . $_GET['user_id'];
-$result = mysqli_query($conn, query: $sql);
+$result = mysqli_query($conn, $sql);
 
 if (!empty($_POST)) {
     $email = $_POST['email'];
-    $pass = md5($_POST['pass']);
     $userid = $_GET['user_id'];
-
-    $sql2 = 'UPDATE user SET email = ?, pass = ? WHERE user_id = ?';
-    $stmt = mysqli_prepare($conn, $sql2);
-
     $usern = $_POST['user_n'];
+    $pass = !empty($_POST['pass']) ? md5($_POST['pass']) : null;
+
+    // Prepare the SQL statements
+    if ($pass) {
+        $sql2 = 'UPDATE user SET email = ?, pass = ? WHERE user_id = ?';
+        $stmt = mysqli_prepare($conn, $sql2);
+        mysqli_stmt_bind_param($stmt, 'ssi', $email, $pass, $userid);
+    } else {
+        $sql2 = 'UPDATE user SET email = ? WHERE user_id = ?';
+        $stmt = mysqli_prepare($conn, $sql2);
+        mysqli_stmt_bind_param($stmt, 'si', $email, $userid);
+    }
 
     $sql3 = 'UPDATE profile SET user_n = ? WHERE user_id = ?';
     $stmt2 = mysqli_prepare($conn, $sql3);
+    mysqli_stmt_bind_param($stmt2, 'si', $usern, $userid);
 
-    if ($stmt) {
-        if ($stmt2) {
-            // Bind parameters
-            mysqli_stmt_bind_param($stmt, 'ssi', $email, $pass, $userid);
-            $result2 = mysqli_stmt_execute($stmt);
+    if ($stmt && $stmt2) {
+        $result2 = mysqli_stmt_execute($stmt);
+        $result3 = mysqli_stmt_execute($stmt2);
 
-            mysqli_stmt_bind_param($stmt2, 'si', $usern, $userid);
-            $result3 = mysqli_stmt_execute($stmt2);
-
-            if ($result2) {
-                if ($result3) {
-                    header("location:profile.php");
-                } else {
-                    echo "<script>
+        if ($result2 && $result3) {
+            header("location:profile.php");
+        } else {
+            echo "<script>
             Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'ไม่สามารถทำรายการได้',
-            showConfirmButton: false,
-            timer: 2000 })
+                position: 'center',
+                icon: 'error',
+                title: 'ไม่สามารถทำรายการได้',
+                showConfirmButton: false,
+                timer: 2000
+            });
             </script>";
-                }
-            } else {
-                echo "<script>
-            Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'ไม่สามารถทำรายการได้',
-            showConfirmButton: false,
-            timer: 2000 })
-            </script>";
-            }
-
-            // Close the statement
-            mysqli_stmt_close($stmt);
-            mysqli_stmt_close($stmt2);
         }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
+        mysqli_stmt_close($stmt2);
     } else {
         // Prepare failed
         echo "<script>Swal.fire({
@@ -67,8 +58,6 @@ if (!empty($_POST)) {
         })</script>";
     }
 }
-
-
 ?>
 
 <body>
@@ -88,13 +77,14 @@ if (!empty($_POST)) {
                                 <div class="mb-3">
                                     <label for="" class="form-label">อีเมลผู้ใช้งาน</label>
                                     <input type="email" class="form-control " id="email" name="email" value="<?php echo $data['email'] ?>" required>
-                                    <label for="" class="form-label">รหัสผู้ใช้งาน</label>
-                                    <input type="text" class="form-control " id="pass" name="pass" value="<?php echo $data['pass'] ?>" required>
+                                    <label for="" class="form-label">รหัสผ่านใหม่ </label>
+                                    <label for="">(หากไม่ต้องการเปลี่ยนให้ปล่อยเป็นค่าว่าง)</label>
+                                    <input type="password" class="form-control " id="pass" name="pass">
                                     <label for="" class="form-label">ชื่อผู้ใช้งาน</label>
                                     <input type="text" class="form-control " id="user_n" name="user_n" value="<?php echo $data['user_n'] ?>" required>
                                 </div>
                             <?php
-                        }
+                            }
                             ?>
                             <button type="submit" class="btn btn-color" style="width: 100%;">ยืนยัน</button>
                             </form>
@@ -103,10 +93,10 @@ if (!empty($_POST)) {
                 </div>
                 <div class="col"></div>
         </div>
-
     </div>
     <script>
         document.title = "แก้ไขผู้ใช้";
     </script>
 
     <?php include('structure/footer.php') ?>
+</body>

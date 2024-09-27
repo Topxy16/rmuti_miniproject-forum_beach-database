@@ -20,7 +20,7 @@ $result1 = mysqli_query($conn, query: $sql1);
     <div class="container">
         <?php
         while ($data = mysqli_fetch_assoc($result1)) {
-            ?>
+        ?>
             <div class="row mt-2 justify-content-center align-items-center g-2">
                 <div class="col-12">
                     <div class="card mb-3">
@@ -49,7 +49,7 @@ $result1 = mysqli_query($conn, query: $sql1);
                 </div>
 
             </div>
-            <?php
+        <?php
         }
         ?>
 
@@ -63,31 +63,37 @@ $result1 = mysqli_query($conn, query: $sql1);
                     <div class="card-body">
                         <?php
                         while ($data = mysqli_fetch_assoc($result)) {
-                            ?>
-                            <a href="forum.php?f_id=<?php echo $data["f_id"] ?>">
-                                <div class="row">
-                                    <div class="col">
+                        ?>
+
+                            <div class="row">
+                                <div class="col">
+                                    <a href="forum.php?f_id=<?php echo $data["f_id"] ?>">
                                         <div class="card-body">
                                             <h5 class="card-title"><?php echo $data['fd_header'] ?></h5>
-                                            <p class="card-text"><?php echo $data['fd_content'] ?></p>
-                                            <div class="align-items-center">
-                                                <span class="card-text"><small class="">โพสต์เมื่อ :
-                                                        <?php echo $data['fd_datetime'] ?>
-                                                        <?php echo $data['category_n'] ?></small></span>
+                                            <div class="badge wrap-color text-wrap mb-3">
+                                                <?php echo $data['category_n'] ?>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col d-flex align-items-end justify-content-end">
-                                        <a href="updateforum.php?f_id=<?php echo $data["f_id"] ?>" class="mb-2 mr-2"
-                                            style="margin-right: 5px;"><i class="bi bi-pencil"></i></a>
-                                        <a onclick="confirm(<?php echo $data['f_id'] ?>)" href="#" class="mb-2"
-                                            style="margin-right: 10px;"><i class="bi bi-trash"></i></a>
-                                    </div>
 
+                                            <div>
+                                                <small class="">โพสต์เมื่อ :
+                                                    <?php echo $data['fd_datetime'] ?>
+
+                                                </small>
+                                            </div>
+
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
+                                <div class="col d-flex align-items-end justify-content-end">
+                                    <a href="updateforum.php?f_id=<?php echo $data["f_id"] ?>" class="mb-2 mr-2"
+                                        style="margin-right: 5px;"><i class="bi bi-pencil"></i></a>
+                                    <a onclick="confirm(<?php echo $data['f_id'] ?>)" href="#" class="mb-2"
+                                        style="margin-right: 10px;"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </div>
+
                             <hr>
-                            <?php
+                        <?php
                         }
                         ?>
                     </div>

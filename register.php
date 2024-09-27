@@ -2,7 +2,7 @@
 
 include("db.connect.php");
 include("structure/header.php");
-include("structure/navbar.php");
+
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
@@ -47,7 +47,9 @@ if (isset($_POST['email'])) {
 }
 ?>
 <body>
-    <div class="contrainer" style="margin-top: 200px;">
+<div class="banner"><img src="img/banner.jpg" width="100%"></div>
+<?php include("structure/navbar.php"); ?>
+    <div class="contrainer" style="margin-top: 100px;">
         <div class="row justify-content-center align-items-center g-2">
             <div class="col"></div>
             <div class="col-2">

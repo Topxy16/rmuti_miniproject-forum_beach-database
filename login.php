@@ -20,6 +20,8 @@ if (isset($_POST['email'])) {
         $_SESSION['role'] = $data['role'];
         header('location:index.php');
     } else {
+        echo ".";
+        echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
         echo "<script>
             Swal.fire({
             position: 'center',
@@ -28,7 +30,6 @@ if (isset($_POST['email'])) {
             showConfirmButton: false,
             timer: 2000 })
             </script>";
-        // รอ 2 วินาทีแล้วกลับไปที่หน้า login
         header("Refresh:2; url=login.php");
     }
 }
@@ -53,7 +54,6 @@ if (isset($_POST['email'])) {
                                     <input type="email" class="form-control " id="email" name="email" aria-describedby="emailHelp" placeholder="อีเมล" required>
                                 </div>
                                 <div class="mb-3">
-
                                     <input type="password" class="form-control" id="pass" name="pass" placeholder="รหัสผ่าน" required>
                                 </div>
                                 <button type="submit" class="btn btn-color mb-3" style="width: 100%;">เข้าสู่ระบบ</button>

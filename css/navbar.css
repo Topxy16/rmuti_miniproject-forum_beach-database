@@ -1,43 +1,51 @@
 .custom-navbar {
-  background-color: #3A6D8C;
+  background-color: #3A6D8C; /* Color of the navbar */
 }
+
 .custom-navbar .navbar-brand,
 .custom-navbar .nav-link {
-  color: #ffffff;
+  color: #ffffff; /* Text color */
 }
+
 .custom-navbar .nav-link:hover {
-  color: #d4c1b3;
+  color: #d4c1b3; /* Hover color */
 }
+
 .nav-ico {
   width: 35px;
   height: 35px;
   cursor: pointer;
   overflow: hidden;
-  transition: all 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out; /* Transition only on width */
   margin-right: 5px;
 }
 
 .nav-ico span {
   font-size: 16px;
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .nav-ico:hover {
-  width: 110px;
+  width: 110px; /* Width on hover */
 }
 
 .nav-ico .ico {
   text-align: center;
   border-radius: 50px;
   display: inline-block;
-  transition: all 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out; /* Transition background color */
 }
 
 .nav-ico .ico i {
   font-size: 20px;
   line-height: 35px;
-  transition: all 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out; /* Transition only on color */
 }
 
 .nav-ico:hover i {
-  color: #fff;
+  color: #fff; /* Icon color on hover */
+}
+
+.navbar-toggler {
+  border-color: transparent; /* Make toggle button border transparent */
 }

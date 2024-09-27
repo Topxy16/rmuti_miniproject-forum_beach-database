@@ -6,65 +6,57 @@ include("structure/navbar.php");
 
 if ($_SESSION['role'] == 2) {
     $sql = 'SELECT `user`.*, `profile`.* FROM `user`, `profile` WHERE user.user_id = profile.user_id AND user.user_id = ' . $_GET['user_id'];
-    $result = mysqli_query($conn, query: $sql);
+    $result = mysqli_query($conn, $sql);
 
     if (!empty($_POST)) {
         $email = $_POST['email'];
-        $pass = md5($_POST['pass']);
         $userid = $_GET['user_id'];
-
-        $sql2 = 'UPDATE user SET email = ?, pass = ? WHERE user_id = ?';
-        $stmt = mysqli_prepare($conn, $sql2);
-
         $usern = $_POST['user_n'];
+        $pass = !empty($_POST['pass']) ? md5($_POST['pass']) : null;
+
+        // Prepare the SQL statements
+        if ($pass) {
+            $sql2 = 'UPDATE user SET email = ?, pass = ? WHERE user_id = ?';
+            $stmt = mysqli_prepare($conn, $sql2);
+            mysqli_stmt_bind_param($stmt, 'ssi', $email, $pass, $userid);
+        } else {
+            $sql2 = 'UPDATE user SET email = ? WHERE user_id = ?';
+            $stmt = mysqli_prepare($conn, $sql2);
+            mysqli_stmt_bind_param($stmt, 'si', $email, $userid);
+        }
 
         $sql3 = 'UPDATE profile SET user_n = ? WHERE user_id = ?';
         $stmt2 = mysqli_prepare($conn, $sql3);
+        mysqli_stmt_bind_param($stmt2, 'si', $usern, $userid);
 
-        if ($stmt) {
-            if ($stmt2) {
-                // Bind parameters
-                mysqli_stmt_bind_param($stmt, 'ssi', $email, $pass, $userid);
-                $result2 = mysqli_stmt_execute($stmt);
+        if ($stmt && $stmt2) {
+            $result2 = mysqli_stmt_execute($stmt);
+            $result3 = mysqli_stmt_execute($stmt2);
 
-                mysqli_stmt_bind_param($stmt2, 'si', $usern, $userid);
-                $result3 = mysqli_stmt_execute($stmt2);
-
-                if ($result2) {
-                    if ($result3) {
-                        header("location:user_admin.php");
-                    } else {
-                        echo "<script>
-            Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'ไม่สามารถทำรายการได้',
-            showConfirmButton: false,
-            timer: 2000 })
-            </script>";
-                    }
-                } else {
-                    echo "<script>
-            Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'ไม่สามารถทำรายการได้',
-            showConfirmButton: false,
-            timer: 2000 })
-            </script>";
-                }
-
-                // Close the statement
-                mysqli_stmt_close($stmt);
-                mysqli_stmt_close($stmt2);
+            if ($result2 && $result3) {
+                header("location:user_admin.php");
+            } else {
+                echo "<script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'ไม่สามารถทำรายการได้',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                </script>";
             }
+
+            // Close the statement
+            mysqli_stmt_close($stmt);
+            mysqli_stmt_close($stmt2);
         } else {
             // Prepare failed
             echo "<script>Swal.fire({
-            icon: 'error',
-            title: 'ไม่สามารถเตรียมคำสั่ง SQL ได้',
-            footer: '<a href>Why do I have this issue?</a>'
-        })</script>";
+                icon: 'error',
+                title: 'ไม่สามารถเตรียมคำสั่ง SQL ได้',
+                footer: '<a href>Why do I have this issue?</a>'
+            })</script>";
         }
     }
 } else {
@@ -72,13 +64,12 @@ if ($_SESSION['role'] == 2) {
             Swal.fire({
             position: 'center',
             icon: 'error',
-            title: 'ไม่สามารถทำรายการได้ คุณไม่ใช้แอดมิน',
+            title: 'ไม่สามารถทำรายการได้ คุณไม่ใช่แอดมิน',
             showConfirmButton: false,
             timer: 2000 })
             </script>";
     header("Refresh:2; url=index.php");
 }
-
 
 ?>
 
@@ -101,9 +92,8 @@ if ($_SESSION['role'] == 2) {
                                     <label for="" class="form-label">อีเมลผู้ใช้งาน</label>
                                     <input type="email" class="form-control " id="email" name="email"
                                         value="<?php echo $data['email'] ?>" required>
-                                    <label for="" class="form-label">รหัสผู้ใช้งาน</label>
-                                    <input type="text" class="form-control " id="pass" name="pass"
-                                        value="<?php echo $data['pass'] ?>" required>
+                                    <label for="" class="form-label">รหัสผ่านใหม่ (ถ้าไม่ต้องการเปลี่ยน ไม่ต้องกรอก)</label>
+                                    <input type="password" class="form-control " id="pass" name="pass">
                                     <label for="" class="form-label">ชื่อผู้ใช้งาน</label>
                                     <input type="text" class="form-control " id="user_n" name="user_n"
                                         value="<?php echo $data['user_n'] ?>" required>
@@ -121,7 +111,8 @@ if ($_SESSION['role'] == 2) {
 
     </div>
     <script>
-        document.title = "แก้ไข้ผู้ใช้งาน";
+        document.title = "แก้ไขผู้ใช้งาน";
     </script>
 
     <?php include('structure/footer.php') ?>
+</body>

@@ -46,10 +46,21 @@ if (isset($_POST['ment_detail'])) {
 
     $sql2 = 'INSERT INTO comment (user_id, f_id, ment_detail, ment_datetime) VALUES (?, ?, ?, ?)';
     $stmt2 = $conn->prepare($sql2);
-    if ($stmt2) {
+
+    if (empty(trim($_POST['ment_detail']))) {
+        echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+        echo "<script>
+            Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'กรุณาใส่ข้อความ',
+            showConfirmButton: false,
+            timer: 2000 })
+            </script>";
+        header("Refresh:2;");
+    } else {
         $stmt2->bind_param('iiss', $userid, $fid, $mentdetail, $mentdate);
-        $result2 = mysqli_stmt_execute($stmt2);
-        if ($result2) {
+            $result2 = mysqli_stmt_execute($stmt2);
             echo "<script>
             Swal.fire({
             position: 'center',
@@ -59,18 +70,6 @@ if (isset($_POST['ment_detail'])) {
             timer: 2000 })
             </script>";
             header("Refresh:2;");
-            exit();
-        } else {
-            echo "<script>
-            Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'ทำรายการไม่สำเร็จ',
-            showConfirmButton: false,
-            timer: 2000 })
-            </script>";
-            header("Refresh:2;");
-        }
     }
 }
 
@@ -80,30 +79,32 @@ if (isset($_POST['ment_detail'])) {
     <div class="container">
         <?php
         while ($data = mysqli_fetch_assoc($result)) {
-            ?>
+        ?>
             <div class="row mt-2 justify-content-center align-items-center g-2">
                 <div class="col"></div>
                 <div class="col-10">
                     <div class="card border-dark mb-3">
                         <div class="row g-0">
                             <div class="col-1 d-flex">
-                                <img src="img/qa.png" alt="Avatar" class="avatar">
+                                <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>" alt="Avatar" class="avatar">
                             </div>
                             <div class="col">
                                 <div class="card-body">
                                     <h5 class="card-title"><b><?php echo $data['fd_header'] ?></b></h5>
-                                    <span class="card-text"><small
-                                            class="text-body-secondary"><?php echo $data['category_n'] ?></small></span>
+                                    <div class="badge wrap-color text-wrap mb-3">
+                                        <?php echo $data['category_n'] ?>
+                                    </div>
                                     <p class="card-text"><?php echo $data['fd_content'] ?></p>
                                     <img src="<?php echo $data['fpic_image'] ?>" alt=""
                                         style="max-width: 100%; height: 400px; ">
-                                    <div class="underline"></div>
                                     <div class="align-items-center">
                                         <div class="vr"></div>
-                                        <span class="card-text"><small
-                                                class="text-body-secondary"><?php echo $data['fd_datetime'] ?></small></span>
-                                        <span class="card-text"><small class="text-body-secondary">ผู้โพสต์
-                                                <?php echo $data['user_n'] ?></small></span>
+                                        <span class="card-text">
+                                            <small class="">สมาชิกหมายเลข : <?php echo $data['user_id'] ?></small>
+                                        </span>
+                                        <span class="card-text">
+                                            <small class="">โพสต์เมื่อ : <?php echo $data['fd_datetime'] ?></small>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -123,14 +124,14 @@ if (isset($_POST['ment_detail'])) {
                             <div class="card border-dark">
                                 <div class="card-body">
                                     <p class="card-text"><?php echo $data['ment_detail'] ?></p>
-                                    <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> |
+                                    <small> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> |
                                         ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>
                                     <?php if (@$_SESSION['user_id'] == @$data['user_id']) { ?>
                                         <div style="text-align: right">
                                             <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>"
-                                                style="text-decoration: none; color:black;"><i class="bi bi-pencil"></i></a>
+                                                style="text-decoration: none; "><i class="bi bi-pencil"></i></a>
                                             <a onclick="confirm(<?php echo $data['ment_id'] ?>,<?php echo $data['f_id'] ?>)" href="#"
-                                                style="text-decoration: none; color:black;">
+                                                style="text-decoration: none; ">
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                         </div>
@@ -146,11 +147,11 @@ if (isset($_POST['ment_detail'])) {
                 <div class="row justify-content-center align-items-center g-2 mt-3">
                     <div class="col"></div>
                     <div class="col-10">
-                        <div class="card border-dark">
+                        <div class="card">
                             <div class="card-body">
                                 <form method="post">
-                                    <textarea name="ment_detail" id="ment_detail" cols="100" rows="5"></textarea>
-                                    <button type="submit" class="btn btn-success" style="width: 25%;">เพิ่มความเห็น</button>
+                                    <textarea name="ment_detail" id="mytextarea"></textarea>
+                                    <button type="submit" class="btn btn-success mt-2" style="width: 25%;">เพิ่มความเห็น</button>
                                     <small>สมาชิกหมายเลข : <?php echo $_SESSION['user_id'] ?></small>
                                 </form>
                             </div>
@@ -159,7 +160,7 @@ if (isset($_POST['ment_detail'])) {
                     <div class="col"></div>
                 </div>
             <?php } ?>
-            <?php
+        <?php
         }
         ?>
     </div>
