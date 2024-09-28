@@ -1,5 +1,6 @@
 <?php
 
+
 include("db.connect.php");
 include("structure/header.php");
 include("structure/navbar.php");
@@ -31,7 +32,10 @@ if (!empty($_SESSION['user_id'])) {
 
                     if ($result2) {
                         if (@is_uploaded_file($_FILES['dspPic']['tmp_name'])) {
-                            if (($_FILES['dspPic']['type'] == 'image/jpeg') || ($_FILES['dspPic']['type'] == 'image/png')) {
+                            $fileType = mime_content_type($_FILES['dspPic']['tmp_name']);
+                            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+                            if (in_array($fileType, $allowedTypes)) {
                                 $target_dir = 'img/';
                                 $target_file = $target_dir . basename($_FILES['dspPic']['name']);
 
@@ -42,7 +46,6 @@ if (!empty($_SESSION['user_id'])) {
                                         $stmt3->bind_param("sii", $target_file, $user_id, $f_id);
                                         $result3 = mysqli_stmt_execute($stmt3);
                                         if ($result3) {
-
                                             echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                                             echo "<script>
                                                     Swal.fire({
@@ -61,36 +64,38 @@ if (!empty($_SESSION['user_id'])) {
                                     } else {
                                         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                                         echo "<script>
-                                        Swal.fire({
-                                        position: 'center',
-                                        icon: 'error',
-                                        title: 'ไม่สามารถทำรายการได้',
-                                        showConfirmButton: false,
-                                        timer: 2000 })
-                                        </script>";
+                                                Swal.fire({
+                                                position: 'center',
+                                                icon: 'error',
+                                                title: 'ไม่สามารถทำรายการได้',
+                                                showConfirmButton: false,
+                                                timer: 2000
+                                                });
+                                              </script>";
                                     }
                                 } else {
                                     echo "<script>
-                                        Swal.fire({
-                                        position: 'center',
-                                        icon: 'error',
-                                        title: 'เกิดข้อผิดพลาดในการอัปโหลดไฟล์!',
-                                        showConfirmButton: false,
-                                        timer: 2000 })
-                                        </script>";
+                                            Swal.fire({
+                                            position: 'center',
+                                            icon: 'error',
+                                            title: 'เกิดข้อผิดพลาดในการอัปโหลดไฟล์!',
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                            });
+                                          </script>";
                                 }
                             } else {
                                 echo "<script>
-                                Swal.fire({
-                                position: 'center',
-                                icon: 'error',
-                                title: 'ประเภทไฟล์ไม่ถูกต้อง! อนุญาตเฉพาะไฟล์ JPEG และ PNG เท่านั้น!',
-                                showConfirmButton: false,
-                                timer: 2000 })
-                                </script>";
+                                        Swal.fire({
+                                        position: 'center',
+                                        icon: 'error',
+                                        title: 'ประเภทไฟล์ไม่ถูกต้อง! อนุญาตเฉพาะไฟล์ JPEG และ PNG เท่านั้น!',
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                        });
+                                      </script>";
                             }
                         } else {
-
                             echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                             echo "<script>
                                     Swal.fire({
@@ -141,6 +146,7 @@ if (!empty($_SESSION['user_id'])) {
 $sql3 = "SELECT * FROM category";
 $result3 = mysqli_query($conn, $sql3);
 
+
 ?>
 
 <body>
@@ -183,7 +189,7 @@ $result3 = mysqli_query($conn, $sql3);
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h4>รูป JPG/PNG</h4>
+                        <h4>รูป JPG/PNG/GIF</h4>
                     </div>
                     <div class="card-body">
                         <div class="mb-4">
@@ -225,6 +231,7 @@ $result3 = mysqli_query($conn, $sql3);
             previewImage.src = defaultImage; // Reset to default image when form is reset
         });
     </script>
+
     <script>
         document.title = "สร้างฟอรัม";
     </script>
