@@ -4,13 +4,17 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <form class="d-flex" action="search_forum.php" method="GET">
+                <input class="form-control me-2" type="search" placeholder="ค้นหาฟอรัม" aria-label="Search" name="query" required>
+                <button class="btn btn-color" type="submit">ค้นหา</button>
+            </form>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto align-items-center">
+            <div class="navbar-nav ms-auto align-items-center">
                 <li class="nav-ico">
                     <a class="ico" href="createforum.php" aria-label="Create Forum">
                         <i class="bi bi-pencil-square" style="color:white;"></i>
                     </a>
-                    <a style="color:white; text-decoration: none;" href="createforum.php"><span>ฟอรัม</span></a>
+                    <a style="color:white; text-decoration: none;" href="createforum.php"><span>เพิ่มฟอรัม</span></a>
                 </li>
                 <?php if (@$_SESSION['role'] == '2') { ?>
                     <li class="nav-ico">
@@ -42,6 +46,8 @@
                     </li>
                 <?php } ?>
             </ul>
+           
+              
         </div>
     </div>
 </nav>

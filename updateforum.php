@@ -100,7 +100,7 @@ if (!empty($_POST)) {
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">รายละเอียด</label>
-                                    <textarea class="form-control" id="fd_content" name="fd_content" rows="8"
+                                    <textarea class="form-control" id="mytextarea" name="fd_content" rows="8"
                                         required><?php echo $data['fd_content'] ?></textarea>
                                 </div>
                                 <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>

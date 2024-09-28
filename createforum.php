@@ -21,7 +21,7 @@ if (!empty($_SESSION['user_id'])) {
 
             if ($result1) {
                 $f_id = mysqli_insert_id($conn);
-                
+
                 $sql2 = "INSERT INTO forum_detail (fd_header, fd_content, fd_datetime, f_id) VALUES (?, ?, ?, ?)";
                 $stmt2 = mysqli_prepare($conn, $sql2);
 
@@ -42,7 +42,7 @@ if (!empty($_SESSION['user_id'])) {
                                         $stmt3->bind_param("sii", $target_file, $user_id, $f_id);
                                         $result3 = mysqli_stmt_execute($stmt3);
                                         if ($result3) {
-                              
+
                                             echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                                             echo "<script>
                                                     Swal.fire({
@@ -160,19 +160,18 @@ $result3 = mysqli_query($conn, $sql3);
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">รายละเอียด</label>
-                                <textarea class="form-control" id="mytextarea" name="fd_content"
-                                    ></textarea>
+                                <textarea class="form-control" id="mytextarea" name="fd_content"></textarea>
                             </div>
                             <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>
                             <select class="form-select mb-3" aria-label="Default select example" name="category_id"
                                 required>
                                 <?php
                                 while ($data = mysqli_fetch_assoc($result3)) {
-                                    ?>
+                                ?>
                                     <option value="<?php echo $data['category_id'] ?>">
                                         <?php echo $data['category_n'] ?>
                                     </option>
-                                    <?php
+                                <?php
                                 }
                                 ?>
                             </select>
@@ -207,11 +206,11 @@ $result3 = mysqli_query($conn, $sql3);
         const defaultImage = "https://via.placeholder.com/150"; // Default image URL
 
         // Adding an event listener for file input changes
-        dspPicInput.addEventListener('change', function (event) {
+        dspPicInput.addEventListener('change', function(event) {
             const file = event.target.files[0]; // Get the file from input
             if (file) {
                 const reader = new FileReader(); // Create a FileReader object
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     previewImage.src = e.target.result; // Set the image source to the loaded file
                 }
                 reader.readAsDataURL(file); // Read the file as a DataURL (base64)
@@ -222,7 +221,7 @@ $result3 = mysqli_query($conn, $sql3);
         });
 
         // Reset the image preview to default if the form is reset
-        document.querySelector('form').addEventListener('reset', function () {
+        document.querySelector('form').addEventListener('reset', function() {
             previewImage.src = defaultImage; // Reset to default image when form is reset
         });
     </script>

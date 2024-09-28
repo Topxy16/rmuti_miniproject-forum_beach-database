@@ -5,16 +5,20 @@ include("structure/header.php");
 include("structure/navbar.php");
 
 
-$sql = 'SELECT `forum`.*, `category`.*, `forum_detail`.*
-FROM `forum` 
-	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
-	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`';
+$sql = 'SELECT forum.*, category.*, forum_detail.*, profile.user_n
+        FROM forum 
+        LEFT JOIN category ON forum.category_id = category.category_id 
+        LEFT JOIN forum_detail ON forum_detail.f_id = forum.f_id 
+        LEFT JOIN profile ON forum.user_id = profile.user_id
+        ORDER BY forum_detail.fd_datetime DESC';
 $result = mysqli_query($conn, $sql);
 
-$sql3 = 'SELECT `forum`.*, `category`.*, `forum_detail`.*
-FROM `forum` 
-	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
-	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` ORDER BY forum_detail.fd_datetime DESC';
+$sql3 = 'SELECT forum.*, category.*, forum_detail.*, profile.user_n
+         FROM forum 
+         LEFT JOIN category ON forum.category_id = category.category_id 
+         LEFT JOIN forum_detail ON forum_detail.f_id = forum.f_id 
+         LEFT JOIN profile ON forum.user_id = profile.user_id
+         ORDER BY forum_detail.fd_datetime DESC';
 $result3 = mysqli_query($conn, $sql3);
 
 $sql4 = 'SELECT COUNT(*) AS count_m, f_id
@@ -28,11 +32,15 @@ GROUP BY f_id
 ORDER BY count_m DESC;';
 $result5 = mysqli_query($conn, $sql5);
 
-$sql6 = 'SELECT `forum`.*, `category`.*, `forum_detail`.*
-FROM `forum` 
-	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
-	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`';
+$sql6 = 'SELECT forum.*, category.*, forum_detail.*, profile.user_n
+         FROM forum 
+         LEFT JOIN category ON forum.category_id = category.category_id 
+         LEFT JOIN forum_detail ON forum_detail.f_id = forum.f_id 
+         LEFT JOIN profile ON forum.user_id = profile.user_id';
 $result6 = mysqli_query($conn, $sql6);
+
+$sql7 = 'SELECT * FROM category;';
+$result7 = mysqli_query($conn, $sql7);
 
 if (!empty(@$_SESSION['user_id'])) {
     $sql1 = 'SELECT * FROM profile WHERE user_id =' . $_SESSION['user_id'];
@@ -74,12 +82,11 @@ WHERE comment.f_id = 10;';
                                                     <?php echo $data['category_n'] ?>
                                                 </div>
                                                 <div>
-                                                    <small>สมาชิกหมายเลข <?php echo $data['user_id'] ?> |
+                                                    <small>ผู้โพสต์ <?php echo $data['user_n'] ?> |
                                                         <?php echo $data['fd_datetime'] ?></small>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </a>
                                 <hr>
@@ -112,7 +119,7 @@ WHERE comment.f_id = 10;';
                                                             <?php echo $data2['category_n'] ?>
                                                         </div>
                                                         <div>
-                                                            <small>สมาชิกหมายเลข <?php echo $data2['user_id'] ?> |
+                                                            <small>ผู้โพสต์ <?php echo $data2['user_n'] ?> |
                                                                 <?php echo $data2['fd_datetime'] ?></small>
                                                         </div>
                                                     </div>
@@ -152,7 +159,7 @@ WHERE comment.f_id = 10;';
                                                     <?php echo $data['category_n'] ?>
                                                 </div>
                                                 <div>
-                                                    <small>สมาชิกหมายเลข <?php echo $data['user_id'] ?> |
+                                                    <small>ผู้โพสต์ <?php echo $data['user_n'] ?> |
                                                         <?php echo $data['fd_datetime'] ?></small>
                                                 </div>
                                             </div>
@@ -165,7 +172,6 @@ WHERE comment.f_id = 10;';
                                                 <?php } ?>
                                             </div>
                                         </div>
-
                                     </div>
                                 </a>
                                 <hr>
@@ -223,13 +229,15 @@ WHERE comment.f_id = 10;';
                                 <h5>ประเภทฟอรัม</h5>
                             </div>
                             <div class="card-body text-center">
-                                <div><a href="forum_q.php">คำถาม</a></div>
-                                <hr>
-                                <div><a href="forum_c.php">สนทนา</a></div>
-                                <hr>
-                                <div><a href="forum_s.php">ขายของ</a></div>
-                                <hr>
-                                <div><a href="forum_n.php">ข่าว</a></div>
+                                <?php while ($data = mysqli_fetch_assoc($result7)) { ?>
+                                    <div>
+                                        <a href="index_cate.php?query=<?php echo $data['category_n']?>">
+                                        <?php echo $data['category_n']?>
+                                        </a>
+                                    </div>
+                                    <hr>
+                                <?php } ?>
+
                             </div>
                         </div>
                         <div class="card testimonial-card mt-2">
@@ -248,7 +256,11 @@ WHERE comment.f_id = 10;';
         </div>
     </div>
 
+    <a href="createforum.php" class="btn btn-color sticky-btn">
+        <i class="bi bi-plus"></i> สร้างฟอรัม
+    </a>
+
     <script>
-        document.title = "หน้าแรก";
+        document.title = "forum Beach";
     </script>
     <?php include('structure/footer.php') ?>

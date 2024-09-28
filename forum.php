@@ -18,10 +18,20 @@ $stmt->bind_param('i', $fid);
 $stmt->execute();
 $result = $stmt->get_result();
 
+$sql4 = 'SELECT forum.*, forum_detail.fd_header
+FROM forum
+LEFT JOIN forum_detail ON forum.f_id = forum_detail.f_id
+WHERE forum.f_id = ?;';
+$stmt4 = $conn->prepare($sql4);
+$stmt4->bind_param('i', $fid);
+$stmt4->execute();
+$result4 = $stmt4->get_result();
+$titlename = mysqli_fetch_assoc($result4);
 
-$sql1 = 'SELECT `forum`.*, `comment`.*
+$sql1 = 'SELECT `forum`.*, `comment`.* , profile.*
 FROM `forum` 
 LEFT JOIN `comment` ON `comment`.`f_id` = `forum`.`f_id`
+LEFT JOIN `profile` ON `comment`.`user_id` = `profile`.`user_id`
 WHERE forum.f_id = ?';
 $stmt1 = $conn->prepare($sql1);
 $stmt1->bind_param('i', $fid);
@@ -60,8 +70,8 @@ if (isset($_POST['ment_detail'])) {
         header("Refresh:2;");
     } else {
         $stmt2->bind_param('iiss', $userid, $fid, $mentdetail, $mentdate);
-            $result2 = mysqli_stmt_execute($stmt2);
-            echo "<script>
+        $result2 = mysqli_stmt_execute($stmt2);
+        echo "<script>
             Swal.fire({
             position: 'center',
             icon: 'success',
@@ -69,7 +79,7 @@ if (isset($_POST['ment_detail'])) {
             showConfirmButton: false,
             timer: 2000 })
             </script>";
-            header("Refresh:2;");
+        header("Refresh:2;");
     }
 }
 
@@ -84,8 +94,8 @@ if (isset($_POST['ment_detail'])) {
                 <div class="col"></div>
                 <div class="col-10">
                     <div class="card border-dark mb-3">
-                        <div class="row g-0">
-                            <div class="col-1 d-flex">
+                        <div class="row">
+                            <div class="col-1">
                                 <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>" alt="Avatar" class="avatar">
                             </div>
                             <div class="col">
@@ -97,10 +107,10 @@ if (isset($_POST['ment_detail'])) {
                                     <p class="card-text"><?php echo $data['fd_content'] ?></p>
                                     <img src="<?php echo $data['fpic_image'] ?>" alt=""
                                         style="max-width: 100%; height: 400px; ">
-                                    <div class="align-items-center">
+                                    <div class="align-items-center mt-2">
                                         <div class="vr"></div>
                                         <span class="card-text">
-                                            <small class="">สมาชิกหมายเลข : <?php echo $data['user_id'] ?></small>
+                                            <small class="">ผู้โพสต์ : <?php echo $data['user_n'] ?></small>
                                         </span>
                                         <span class="card-text">
                                             <small class="">โพสต์เมื่อ : <?php echo $data['fd_datetime'] ?></small>
@@ -113,7 +123,8 @@ if (isset($_POST['ment_detail'])) {
                 </div>
                 <div class="col"></div>
             </div>
-            <?php while ($data = mysqli_fetch_assoc($result1)) { ?>
+            <?php $count_m = 1;
+            while ($data = mysqli_fetch_assoc($result1)) { ?>
                 <?php if (!empty($data['f_id'])) { ?>
 
                     <div class="row justify-content-center align-items-center g-2 mt-2">
@@ -122,10 +133,12 @@ if (isset($_POST['ment_detail'])) {
                         <div class="col-10">
 
                             <div class="card border-dark">
+                                <div class="card-header">ความคิดเห็นที่ : <?php echo $count_m ?></div>
                                 <div class="card-body">
                                     <p class="card-text"><?php echo $data['ment_detail'] ?></p>
-                                    <small> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> |
-                                        ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>
+                                    <hr>
+                                    <small> ความเห็นจาก : <?php echo $data['user_n'] ?> | โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?>
+                                    </small>
                                     <?php if (@$_SESSION['user_id'] == @$data['user_id']) { ?>
                                         <div style="text-align: right">
                                             <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>"
@@ -142,7 +155,9 @@ if (isset($_POST['ment_detail'])) {
                         <div class="col"></div>
                     </div>
                 <?php } ?>
-            <?php } ?>
+            <?php 
+        $count_m ++;
+        } ?>
             <?php if (!empty($_SESSION['user_id'])) { ?>
                 <div class="row justify-content-center align-items-center g-2 mt-3">
                     <div class="col"></div>
@@ -184,6 +199,6 @@ if (isset($_POST['ment_detail'])) {
         }
     </script>
     <script>
-        document.title = "ฟอรัม";
+        document.title = "<?php echo $titlename['fd_header'] ?>";
     </script>
     <?php include('structure/footer.php') ?>

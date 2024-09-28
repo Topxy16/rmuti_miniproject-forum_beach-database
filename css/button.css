@@ -9,3 +9,25 @@
 .buttonProfile{
     text-align: end;
 }
+
+.sticky-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px; /* เพิ่ม padding เพื่อให้มีพื้นที่สำหรับข้อความ */
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none; /* ลบเส้นใต้ของลิงก์ */
+    border-radius: 5px; /* ปรับให้เป็นสี่เหลี่ยม */
+}
+
+.sticky-btn i {
+    font-size: 18px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}

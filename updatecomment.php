@@ -53,7 +53,7 @@ if (isset($_POST['ment_detail'])) {
             showConfirmButton: false,
             timer: 2000 })
             </script>";
-            header("Refresh:2; url=forum.php?f_id=".$_GET['f_id'] );
+            header("Refresh:2; url=forum.php?f_id=" . $_GET['f_id']);
 
             exit();
         } else {
@@ -112,16 +112,14 @@ if (isset($_POST['ment_detail'])) {
                             <div class="card-body">
                                 <?php if (@$_GET['ment_id'] == @$data['ment_id']) { ?>
                                     <form method="post">
-                                        <div class="mb-3">                            
-                                           <textarea name="ment_detail" id="ment_detail" cols="100" rows="5"> <?php echo $data['ment_detail']?></textarea>                                    
+                                        <div class="mb-3">
+                                            <textarea name="ment_detail" id="mytextarea" cols="100" rows="5"> <?php echo $data['ment_detail'] ?></textarea>
                                         </div>
-                                        
-                                        <button type="submit" class="btn btn-primary">แก้ไขความเห็น</button>
+                                        <button type="submit" class="btn btn-color">แก้ไขความเห็น</button>
                                     </form>
                                 <?php } else { ?>
                                     <p class="card-text"><?php echo $data['ment_detail'] ?></p>
                                     <small class="text-body-secondary"> โพสต์เมื่อ : <?php echo $data['ment_datetime'] ?> | ความเห็นจากสามาชิกหมายเลข : <?php echo $data['user_id'] ?> </small>
-
                                     <?php if (@$_SESSION['user_id'] == @$data['user_id']) { ?>
                                         <div style="text-align: right">
                                             <a href="updatecomment.php?ment_id=<?php echo $data['ment_id'] ?>&f_id=<?php echo $_GET['f_id'] ?>" style="text-decoration: none; color:black;"><i class="bi bi-pencil"></i></a>
@@ -134,7 +132,7 @@ if (isset($_POST['ment_detail'])) {
                     </div>
                     <div class="col"></div>
                 </div>
-            <?php } ?>            
+            <?php } ?>
         <?php
         }
         ?>
@@ -142,4 +140,4 @@ if (isset($_POST['ment_detail'])) {
     <script>
         document.title = "แก้ไขความคิด";
     </script>
-<?php include('structure/footer.php') ?>
+    <?php include('structure/footer.php') ?>
