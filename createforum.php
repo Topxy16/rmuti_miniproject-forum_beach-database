@@ -1,6 +1,5 @@
 <?php
 
-
 include("db.connect.php");
 include("structure/header.php");
 include("structure/navbar.php");
@@ -13,6 +12,29 @@ if (!empty($_SESSION['user_id'])) {
         $fd_content = $_POST['fd_content'];
         $fd_datetime = date("Y-m-d H:i:s");
 
+        // ตรวจสอบว่ามีไฟล์ถูกอัพโหลดหรือไม่
+        if (@is_uploaded_file($_FILES['dspPic']['tmp_name'])) {
+            $fileType = mime_content_type($_FILES['dspPic']['tmp_name']);
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+            // ตรวจสอบประเภทไฟล์
+            if (!in_array($fileType, $allowedTypes)) {
+                echo "<script>
+                        Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'ประเภทไฟล์ไม่ถูกต้อง! อนุญาตเฉพาะไฟล์ JPEG และ PNG เท่านั้น!',
+                        showConfirmButton: false,
+                        timer: 2000
+                        }).then(function() {
+                            window.history.back();
+                        });
+                      </script>";
+                exit;
+            }
+        }
+
+        // ถ้าประเภทไฟล์ถูกต้องหรือไม่มีไฟล์อัพโหลด ทำการ insert ข้อมูล
         $sql1 = "INSERT INTO forum (user_id, category_id) VALUES (?, ?)";
         $stmt1 = mysqli_prepare($conn, $sql1);
 
@@ -32,53 +54,38 @@ if (!empty($_SESSION['user_id'])) {
 
                     if ($result2) {
                         if (@is_uploaded_file($_FILES['dspPic']['tmp_name'])) {
-                            $fileType = mime_content_type($_FILES['dspPic']['tmp_name']);
-                            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                            $target_dir = 'img/';
+                            $target_file = $target_dir . basename($_FILES['dspPic']['name']);
 
-                            if (in_array($fileType, $allowedTypes)) {
-                                $target_dir = 'img/';
-                                $target_file = $target_dir . basename($_FILES['dspPic']['name']);
-
-                                if (move_uploaded_file($_FILES['dspPic']['tmp_name'], $target_file)) {
-                                    $sql3 = "INSERT INTO `forum_image` (`fpic_id`, `fpic_image`, `user_id`, `f_id`) VALUES (NULL, ?, ?, ?);";
-                                    $stmt3 = $conn->prepare($sql3);
-                                    if ($stmt3) {
-                                        $stmt3->bind_param("sii", $target_file, $user_id, $f_id);
-                                        $result3 = mysqli_stmt_execute($stmt3);
-                                        if ($result3) {
-                                            echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
-                                            echo "<script>
-                                                    Swal.fire({
-                                                    position: 'center',
-                                                    icon: 'success',
-                                                    title: 'ทำรายการสำเร็จ',
-                                                    showConfirmButton: false,
-                                                    timer: 2000
-                                                    }).then(function() {
-                                                        window.location.href = 'index.php';
-                                                    });
-                                                  </script>";
-                                            ob_end_flush();
-                                            exit;
-                                        }
-                                    } else {
+                            if (move_uploaded_file($_FILES['dspPic']['tmp_name'], $target_file)) {
+                                $sql3 = "INSERT INTO `forum_image` (`fpic_id`, `fpic_image`, `user_id`, `f_id`) VALUES (NULL, ?, ?, ?);";
+                                $stmt3 = $conn->prepare($sql3);
+                                if ($stmt3) {
+                                    $stmt3->bind_param("sii", $target_file, $user_id, $f_id);
+                                    $result3 = mysqli_stmt_execute($stmt3);
+                                    if ($result3) {
                                         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                                         echo "<script>
                                                 Swal.fire({
                                                 position: 'center',
-                                                icon: 'error',
-                                                title: 'ไม่สามารถทำรายการได้',
+                                                icon: 'success',
+                                                title: 'ทำรายการสำเร็จ',
                                                 showConfirmButton: false,
                                                 timer: 2000
+                                                }).then(function() {
+                                                    window.location.href = 'index.php';
                                                 });
                                               </script>";
+                                        ob_end_flush();
+                                        exit;
                                     }
                                 } else {
+                                    echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
                                     echo "<script>
                                             Swal.fire({
                                             position: 'center',
                                             icon: 'error',
-                                            title: 'เกิดข้อผิดพลาดในการอัปโหลดไฟล์!',
+                                            title: 'ไม่สามารถทำรายการได้',
                                             showConfirmButton: false,
                                             timer: 2000
                                             });
@@ -89,7 +96,7 @@ if (!empty($_SESSION['user_id'])) {
                                         Swal.fire({
                                         position: 'center',
                                         icon: 'error',
-                                        title: 'ประเภทไฟล์ไม่ถูกต้อง! อนุญาตเฉพาะไฟล์ JPEG และ PNG เท่านั้น!',
+                                        title: 'เกิดข้อผิดพลาดในการอัปโหลดไฟล์!',
                                         showConfirmButton: false,
                                         timer: 2000
                                         });
@@ -145,7 +152,6 @@ if (!empty($_SESSION['user_id'])) {
 
 $sql3 = "SELECT * FROM category";
 $result3 = mysqli_query($conn, $sql3);
-
 
 ?>
 

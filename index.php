@@ -8,7 +8,7 @@ include("structure/navbar.php");
 $sql = 'SELECT forum.*, category.*, forum_detail.*, profile.user_n
         FROM forum 
         LEFT JOIN category ON forum.category_id = category.category_id 
-        LEFT JOIN forum_detail ON forum_detail.f_id = forum.f_id 
+        LEFT JOIN forum_detail ON forum_detail.f_id = forum.f_id
         LEFT JOIN profile ON forum.user_id = profile.user_id
         ORDER BY forum_detail.fd_datetime DESC';
 $result = mysqli_query($conn, $sql);
@@ -127,7 +127,7 @@ WHERE comment.f_id = 10;';
                                                 <div class="col d-flex align-items-end justify-content-end">
                                                     <div>
                                                         <?php if (@$data['f_id'] == @$data2['f_id']) { ?>
-                                                            <i class="bi bi-chat"> <?php echo $data['count_m']; ?></i>
+                                                            <i class="bi bi-chat"></i> <?php echo $data['count_m']; ?>
                                                         <?php } ?>
                                                     </div>
                                                 </div>
@@ -147,31 +147,30 @@ WHERE comment.f_id = 10;';
                             <h5>ทั้งหมด</h5>
                         </div>
                         <div class="card-body">
-                            <?php
-                            while ($data = mysqli_fetch_assoc($result)) {
-                            ?>
-                                <a href="forum.php?f_id=<?php echo $data["f_id"] ?>">
+                            <?php while ($dataall = mysqli_fetch_assoc($result)) { ?>
+                                <a href="forum.php?f_id=<?php echo $dataall['f_id'] ?>">
                                     <div class="row">
                                         <div class="col">
                                             <div>
-                                                <h5><?php echo $data['fd_header'] ?></h5>
+                                                <h5><?php echo $dataall['fd_header'] ?></h5>
                                                 <div class="badge wrap-color text-wrap mb-3">
-                                                    <?php echo $data['category_n'] ?>
+                                                    <?php echo $dataall['category_n'] ?>
                                                 </div>
                                                 <div>
-                                                    <small>ผู้โพสต์ <?php echo $data['user_n'] ?> |
-                                                        <?php echo $data['fd_datetime'] ?></small>
+                                                    <small>ผู้โพสต์ <?php echo $dataall['user_n'] ?> |
+                                                        <?php echo $dataall['fd_datetime'] ?></small>
                                                 </div>
                                             </div>
                                         </div>
-                                        <?php $data1 = mysqli_fetch_assoc($result4) ?>
-                                        <div class="col d-flex align-items-end justify-content-end">
-                                            <div>
-                                                <?php if (@$data['f_id'] == @$data1['f_id']) { ?>
-                                                    <i class="bi bi-chat"> <?php echo $data1['count_m']; ?></i>
-                                                <?php } ?>
+                                        <?php while ($countm = mysqli_fetch_assoc($result4)) {  ?>
+                                            <div class="col d-flex align-items-end justify-content-end">
+                                                <div>
+                                                    <?php if (@$dataall['f_id'] == @$countm['f_id']) { ?>
+                                                        <i class="bi bi-chat"> </i> <?php echo $countm['count_m']; ?>
+                                                    <?php } ?>
+                                                </div>
                                             </div>
-                                        </div>
+                                        <?php } ?>
                                     </div>
                                 </a>
                                 <hr>
@@ -193,8 +192,10 @@ WHERE comment.f_id = 10;';
                                     </div>
                                     <div class="card-up" style="background-color: #6d5b98;"></div>
                                     <div class="avatar mx-auto ">
-                                        <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>"
-                                            class="rounded-circle img-fluid" />
+                                        <a href="imageprofile.php">
+                                            <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>"
+                                                class="rounded-circle img-fluid" />
+                                        </a>
                                     </div>
                                     <div class="card-body text-center">
                                         <h4 class="mb-4"><?php echo $data['user_n'] ?></h4>
@@ -231,8 +232,8 @@ WHERE comment.f_id = 10;';
                             <div class="card-body text-center">
                                 <?php while ($data = mysqli_fetch_assoc($result7)) { ?>
                                     <div>
-                                        <a href="index_cate.php?query=<?php echo $data['category_n']?>">
-                                        <?php echo $data['category_n']?>
+                                        <a href="index_cate.php?query=<?php echo $data['category_n'] ?>">
+                                            <?php echo $data['category_n'] ?>
                                         </a>
                                     </div>
                                     <hr>
@@ -246,8 +247,8 @@ WHERE comment.f_id = 10;';
                             </div>
                             <div class="card-body">
                                 <div><a href="https://www.facebook.com/wachirawit.chuenchitt">ติดต่อทีมงาน forumBeach</a></div>
-                                <div><a href="https://www.facebook.com/wachirawit.chuenchitt">ร่วมงานกับ forumBeach</a></div>
-                                <div><a href="https://www.facebook.com/wachirawit.chuenchitt">ติดต่อลงโฆษณา</a></div>
+                                <div><a href="https://www.facebook.com/profile.php?id=100017823878759">ร่วมงานกับ forumBeach</a></div>
+                                <div><a href="https://www.facebook.com/profile.php?id=100004898866275">ติดต่อลงโฆษณา</a></div>
                             </div>
                         </div>
                     </div>

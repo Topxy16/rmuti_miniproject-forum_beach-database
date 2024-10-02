@@ -4,9 +4,10 @@ include("db.connect.php");
 include("structure/header.php");
 include("structure/navbar.php");
 
-$sql = 'SELECT `forum`.*, `forum_detail`.*, `profile`.*
+$sql = 'SELECT `forum`.*, `forum_detail`.*, `profile`.*,forum_image.*
 FROM `forum` 
-INNER JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` 
+INNER JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`
+INNER JOIN `forum_image` ON `forum_image`.`f_id` = `forum`.`f_id`
 INNER JOIN `profile` ON `forum`.`user_id` = `profile`.`user_id` WHERE forum.f_id=' . $_GET['f_id'];
 $result = mysqli_query($conn, query: $sql);
 
@@ -82,10 +83,11 @@ if (!empty($_POST)) {
 <body>
     <div class="container mt-5">
         <div class="row g-2">
+            <div class="col"></div>
             <?php
             while ($data = mysqli_fetch_assoc($result)) {
-                ?>
-                <div class="col"></div>
+            ?>
+           
                 <div class="col-8">
                     <div class="card">
                         <div class="card-header">
@@ -106,11 +108,11 @@ if (!empty($_POST)) {
                                 <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="category_id">
                                     <?php
-                                    while ($data = mysqli_fetch_assoc($result1)) {
-                                        ?>
-                                        <option value="<?php echo $data['category_id'] ?>"><?php echo $data['category_n'] ?>
+                                    while ($data1 = mysqli_fetch_assoc($result1)) {
+                                    ?>
+                                        <option value="<?php echo $data1['category_id'] ?>"><?php echo $data1['category_n'] ?>
                                         </option>
-                                        <?php
+                                    <?php
                                     }
                                     ?>
                                 </select>
@@ -123,10 +125,12 @@ if (!empty($_POST)) {
                         </div>
                     </div>
                 </div>
-                <?php
+            <div class="col">
+            
+            </div>
+            <?php
             }
             ?>
-            <div class="col"></div>
         </div>
 
     </div>

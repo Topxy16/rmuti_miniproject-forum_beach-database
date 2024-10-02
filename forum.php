@@ -105,8 +105,16 @@ if (isset($_POST['ment_detail'])) {
                                         <?php echo $data['category_n'] ?>
                                     </div>
                                     <p class="card-text"><?php echo $data['fd_content'] ?></p>
-                                    <img src="<?php echo $data['fpic_image'] ?>" alt=""
+
+                                    <?php if(@$_SESSION['user_id']==$data['user_id']){ ?>
+                                    <a href="imageforum.php?f_id=<?php echo $data['f_id']?>">
+                                        <img src="<?php echo $data['fpic_image'] ?>" alt=""
                                         style="max-width: 100%; height: 400px; ">
+                                    </a>
+                                    <?php }else{ ?>
+                                        <img src="<?php echo $data['fpic_image'] ?>" alt=""
+                                        style="max-width: 100%; height: 400px; ">
+                                    <?php  }?>
                                     <div class="align-items-center mt-2">
                                         <div class="vr"></div>
                                         <span class="card-text">
