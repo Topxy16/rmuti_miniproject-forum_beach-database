@@ -46,11 +46,14 @@ if ($_SESSION['role'] == 2) {
                                 ?>
                                     <div class="col-1 justify-content-center align-items-center text-center">
                                         <img src="<?php echo ($data['image'] != "" ? $data['image'] : 'img/prepro.jpg'); ?>" alt="Avatar" class="avatar" style="margin:auto;">
-                                        <p><?php echo $data['user_n'] ?></p>
+                                        <div class="user_n">
+                                            <?php echo $data['user_n'] ?>
+                                        </div>
                                     </div>
                                 <?php
                                     $count++;
-                                } ?>
+                                }
+                                ?>
                                 <small style="text-align: right;">เพิ่มเติม</small>
                             </div>
                         </div>
@@ -75,7 +78,7 @@ if ($_SESSION['role'] == 2) {
                                 <tbody>
                                     <?php $count1 = 0;
                                     while ($data = mysqli_fetch_assoc($result)) {
-                                        if ($count1 >= 14) {
+                                        if ($count1 >= 9) {
                                             break;  // ถ้าแสดงครบ 10 แถวแล้ว หยุดการวนลูป
                                         } ?>
                                         <tr>
@@ -110,7 +113,7 @@ if ($_SESSION['role'] == 2) {
                                         <tbody>
                                             <?php $count1 = 0;
                                             while ($data = mysqli_fetch_assoc($result2)) {
-                                                if ($count1 >= 10) {
+                                                if ($count1 >= 5) {
                                                     break;  // ถ้าแสดงครบ 10 แถวแล้ว หยุดการวนลูป
                                                 } ?>
                                                 <tr>
@@ -130,7 +133,7 @@ if ($_SESSION['role'] == 2) {
                     <a href="category_admin.php" style="text-decoration: none; color:#000;">
                         <div class="mt-2">
                             <div class="col">
-                                <div class="card text-center">
+                                <div class="card text-center" style="padding-top: 15px;">
                                     <div class="card-body">
                                         <h4 class="card-title">ประเภทฟอรัม</h4>
                                         <i class="bi bi-heart-half icon-custom"></i>

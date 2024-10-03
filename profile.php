@@ -4,11 +4,12 @@ include("db.connect.php");
 include("structure/header.php");
 include("structure/navbar.php");
 
-$sql = 'SELECT `forum`.*, `forum_detail`.*,category.* 
-FROM `forum`, `forum_detail`,category 
-WHERE forum.f_id = forum_detail.f_id
-AND forum.category_id = category.category_id
-AND forum.user_id = "' . $_SESSION['user_id'] . '"';
+$sql = 'SELECT forum.*, forum_detail.*, category.*
+        FROM forum
+        INNER JOIN forum_detail ON forum.f_id = forum_detail.f_id
+        INNER JOIN category ON forum.category_id = category.category_id
+        WHERE forum.user_id = ' . $_SESSION['user_id'] . '
+        ORDER BY forum_detail.fd_datetime DESC';
 
 $result = mysqli_query($conn, query: $sql);
 

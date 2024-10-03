@@ -60,7 +60,7 @@ WHERE comment.f_id = 10;';
     <div class="hero">
         <div class="container">
             <div class="row mb-2">
-                <div class="col">
+                <div class="col-9">
                     <div class="card mb-2" style="margin-top: 50px">
                         <div class="card-header">
                             <h5>เพิ่มเข้ามาล่าสุด</h5>
@@ -77,7 +77,7 @@ WHERE comment.f_id = 10;';
                                     <div class="row">
                                         <div class="col">
                                             <div>
-                                                <h5><?php echo $data['fd_header'] ?></h5>
+                                                <h5 class="fheader"><?php echo $data['fd_header'] ?></h5>
                                                 <div class="badge wrap-color text-wrap mb-3">
                                                     <?php echo $data['category_n'] ?>
                                                 </div>
@@ -114,7 +114,9 @@ WHERE comment.f_id = 10;';
                                             <div class="row">
                                                 <div class="col">
                                                     <div>
-                                                        <h5><?php echo $data2['fd_header'] ?></h5>
+                                                        <div class="header">
+                                                            <h5 class="fheader"><?php echo $data2['fd_header'] ?></h5>
+                                                        </div>
                                                         <div class="badge wrap-color text-wrap mb-3">
                                                             <?php echo $data2['category_n'] ?>
                                                         </div>
@@ -152,7 +154,7 @@ WHERE comment.f_id = 10;';
                                     <div class="row">
                                         <div class="col">
                                             <div>
-                                                <h5><?php echo $dataall['fd_header'] ?></h5>
+                                                <h5 class="fheader"><?php echo $dataall['fd_header'] ?></h5>
                                                 <div class="badge wrap-color text-wrap mb-3">
                                                     <?php echo $dataall['category_n'] ?>
                                                 </div>
@@ -213,14 +215,18 @@ WHERE comment.f_id = 10;';
                                 </div>
                                 <div class="card-up" style="background-color: #6d5b98;"></div>
                                 <div class="avatar mx-auto ">
-                                    <img src="img/prepro.jpg"
-                                        class="rounded-circle img-fluid" />
+                                    <a href="login.php">
+                                        <img src="img/prepro.jpg"
+                                            class="rounded-circle img-fluid" />
+                                    </a>
                                 </div>
                                 <div class="card-body text-center">
                                     <h4 class="mb-4"></h4>
                                     <hr />
                                     <p class="dark-grey-text mt-4">
-                                    <h3>ยังไม่ได้เข้าสู่ระบบ</h3>
+                                        <a href="login.php">
+                                            <h3>กรุณาเข้าสู่ระบบ</h3>
+                                        </a>
                                     </p>
                                 </div>
                             </div>

@@ -5,7 +5,6 @@ include("structure/navbar.php");
 
 if (isset($_GET['query'])) {
     $query = mysqli_real_escape_string($conn, $_GET['query']);
-
     // ค้นหาในหลายตาราง
     $sql = "
         SELECT forum.*, category.*, forum_detail.*, profile.*
@@ -13,13 +12,12 @@ if (isset($_GET['query'])) {
         LEFT JOIN category ON forum.category_id = category.category_id 
         LEFT JOIN forum_detail ON forum_detail.f_id = forum.f_id
         LEFT JOIN profile ON profile.user_id = forum.user_id
-        WHERE forum_detail.fd_header LIKE '%$query%' 
-        OR forum_detail.fd_content LIKE '%$query%' 
-        OR category.category_n LIKE '%$query%' 
-        OR forum_detail.fd_header LIKE '%$query%' 
+        WHERE forum_detail.fd_header LIKE '%$query%'
+        OR forum_detail.fd_content LIKE '%$query%'
+        OR category.category_n LIKE '%$query%'
+        OR forum_detail.fd_header LIKE '%$query%'
         OR forum_detail.fd_content LIKE '%$query%'
         OR profile.user_n LIKE '%$query%'
-        
     ";
     
     $result = mysqli_query($conn, $sql);
@@ -35,7 +33,7 @@ if (isset($_GET['query'])) {
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title"><?php echo htmlspecialchars($row['fd_header']); ?></h5>
+                                <h5 class="card-title fheader"><?php echo htmlspecialchars($row['fd_header']); ?></h5>
                                 <div class="badge wrap-color text-wrap mb-3">
                                     <?php echo $row['category_n'] ?>
                                 </div>

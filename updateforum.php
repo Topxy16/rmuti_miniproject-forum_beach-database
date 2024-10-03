@@ -4,11 +4,9 @@ include("db.connect.php");
 include("structure/header.php");
 include("structure/navbar.php");
 
-$sql = 'SELECT `forum`.*, `forum_detail`.*, `profile`.*,forum_image.*
+$sql = 'SELECT `forum`.*, `forum_detail`.*
 FROM `forum` 
-INNER JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`
-INNER JOIN `forum_image` ON `forum_image`.`f_id` = `forum`.`f_id`
-INNER JOIN `profile` ON `forum`.`user_id` = `profile`.`user_id` WHERE forum.f_id=' . $_GET['f_id'];
+LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` WHERE forum.f_id=' . $_GET['f_id'];
 $result = mysqli_query($conn, query: $sql);
 
 $sql1 = 'SELECT * FROM category';
@@ -84,10 +82,7 @@ if (!empty($_POST)) {
     <div class="container mt-5">
         <div class="row g-2">
             <div class="col"></div>
-            <?php
-            while ($data = mysqli_fetch_assoc($result)) {
-            ?>
-           
+            <?php while ($data = mysqli_fetch_assoc($result)) { ?>
                 <div class="col-8">
                     <div class="card">
                         <div class="card-header">
@@ -103,7 +98,7 @@ if (!empty($_POST)) {
                                 <div class="mb-3">
                                     <label for="" class="form-label">รายละเอียด</label>
                                     <textarea class="form-control" id="mytextarea" name="fd_content" rows="8"
-                                        required><?php echo $data['fd_content'] ?></textarea>
+                                        ><?php echo $data['fd_content'] ?></textarea>
                                 </div>
                                 <label for="" class="form-label">ประเภทฟอรัมของคุณ</label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="category_id">
@@ -116,7 +111,7 @@ if (!empty($_POST)) {
                                     }
                                     ?>
                                 </select>
-                                <!-- <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="formFile" class="form-label">รูป</label>
                                 <input class="form-control" type="file" id="formFile">
                             </div> -->
@@ -125,9 +120,7 @@ if (!empty($_POST)) {
                         </div>
                     </div>
                 </div>
-            <div class="col">
-            
-            </div>
+                <div class="col"></div>
             <?php
             }
             ?>

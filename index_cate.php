@@ -37,7 +37,7 @@ if (isset($_GET['query'])) {
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title"><?php echo htmlspecialchars($row['fd_header']); ?></h5>
+                                <h5 class="card-title fheader"><?php echo htmlspecialchars($row['fd_header']); ?></h5>
                                 <div class="badge wrap-color text-wrap mb-3">
                                     <?php echo $row['category_n'] ?>
                                 </div>

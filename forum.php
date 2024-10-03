@@ -8,8 +8,8 @@ $fid = $_GET['f_id'];
 
 $sql = 'SELECT `forum`.*, `category`.*, `forum_detail`.*, `forum_image`.*, `profile`.*
 FROM `forum` 
-	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id` 
-	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` 
+	LEFT JOIN `category` ON `forum`.`category_id` = `category`.`category_id`
+	LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id`
 	LEFT JOIN `forum_image` ON `forum_image`.`f_id` = `forum`.`f_id`
 	LEFT JOIN `profile` ON `profile`.`user_id` = `forum`.`user_id`
     WHERE forum.f_id = ?';
@@ -100,21 +100,37 @@ if (isset($_POST['ment_detail'])) {
                             </div>
                             <div class="col">
                                 <div class="card-body">
-                                    <h5 class="card-title"><b><?php echo $data['fd_header'] ?></b></h5>
+                                    <a href="profile.php">
+                                        <h5 class="card-title"><b><?php echo $data['fd_header'] ?></b></h5>
+                                    </a>
                                     <div class="badge wrap-color text-wrap mb-3">
                                         <?php echo $data['category_n'] ?>
                                     </div>
+
+                                    <?php if (@$_SESSION['user_id'] == $data['user_id']) { ?>
+                                        <?php if ($data['fpic_image'] != '') { ?>
+                                            <div class="imageforum">
+                                                <img src="<?php echo $data['fpic_image'] ?>" class="image-in-forum">
+                                                <div class="middle">
+                                                    <a href="imageforum.php?f_id=<?php echo $data['f_id'] ?>">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </a>
+                                                    <a onclick="confirm1(<?php echo $data['f_id'] ?>)" href="#" class="mb-2" style="margin-right: 10px;">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    <?php } else { ?>
+                                        <?php if ($data['fpic_image'] != '') { ?>
+                                            <div class="imageforum">
+                                                <img src="<?php echo $data['fpic_image'] ?>" alt="" class="image-in-forum">
+                                            </div>
+                                        <?php } ?>
+                                    <?php  } ?>
+
                                     <p class="card-text"><?php echo $data['fd_content'] ?></p>
 
-                                    <?php if(@$_SESSION['user_id']==$data['user_id']){ ?>
-                                    <a href="imageforum.php?f_id=<?php echo $data['f_id']?>">
-                                        <img src="<?php echo $data['fpic_image'] ?>" alt=""
-                                        style="max-width: 100%; height: 400px; ">
-                                    </a>
-                                    <?php }else{ ?>
-                                        <img src="<?php echo $data['fpic_image'] ?>" alt=""
-                                        style="max-width: 100%; height: 400px; ">
-                                    <?php  }?>
                                     <div class="align-items-center mt-2">
                                         <div class="vr"></div>
                                         <span class="card-text">
@@ -163,9 +179,9 @@ if (isset($_POST['ment_detail'])) {
                         <div class="col"></div>
                     </div>
                 <?php } ?>
-            <?php 
-        $count_m ++;
-        } ?>
+            <?php
+                $count_m++;
+            } ?>
             <?php if (!empty($_SESSION['user_id'])) { ?>
                 <div class="row justify-content-center align-items-center g-2 mt-3">
                     <div class="col"></div>
@@ -205,7 +221,27 @@ if (isset($_POST['ment_detail'])) {
                 }
             });
         }
+
+        function confirm1(id) {
+            Swal.fire({
+                title: "คุณยืนยันที่จะทำรายการหรือไม่",
+                text: "คุณจะไม่สามารถย้อนกลับสิ่งที่ทำได้",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ยืนยัน"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'removeimgforum.php?f_id=' + id;
+                }
+            });
+        }
     </script>
+
+
+
     <script>
         document.title = "<?php echo $titlename['fd_header'] ?>";
     </script>

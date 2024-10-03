@@ -8,8 +8,8 @@ $fid = $_GET['f_id'];
 
 $sql = 'SELECT `forum`.*, `forum_detail`.*, `profile`.* 
 FROM `forum` 
-INNER JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` 
-INNER JOIN `profile` ON `forum`.`user_id` = `profile`.`user_id` WHERE forum.f_id = ?';
+LEFT JOIN `forum_detail` ON `forum_detail`.`f_id` = `forum`.`f_id` 
+LEFT JOIN `profile` ON `forum`.`user_id` = `profile`.`user_id` WHERE forum.f_id = ?';
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $fid);
 $stmt->execute();
